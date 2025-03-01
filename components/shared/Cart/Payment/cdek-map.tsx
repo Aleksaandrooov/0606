@@ -34,7 +34,7 @@ export const CdekMap: React.FC<Props> = ({ onChange, cartItem }) => {
         servicePath: 'http://localhost:3000/api/cdek',
         defaultLocation: [37.6173, 55.7558],
         apiKey: 'aeec048c-a096-48fc-b923-e3322f7ffe02',
-        lang: 'rus' as Lang,
+        lang: Lang.RUS,
         offices: null,
         goods: [
           {
