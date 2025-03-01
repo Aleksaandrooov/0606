@@ -41,6 +41,9 @@ export const CdekMap: React.FC<Props> = ({ onChange, cartItem }) => {
         apiKey: 'aeec048c-a096-48fc-b923-e3322f7ffe02',
         lang: 'rus' as Lang,
         offices: null,
+        debug: false,
+        sender: false,
+        popup: false,
         goods: [
           {
             width,
