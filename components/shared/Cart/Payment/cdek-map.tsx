@@ -1,13 +1,18 @@
 'use client'
 
 import React, { useEffect } from 'react'
-import CDEKWidget, { Lang } from '@cdek-it/widget'
+import CDEKWidget from '@cdek-it/widget'
 import { deliveryInteface } from './state/payment-state'
 import { cartType } from '@/app/services/dto/cartTypes'
 
 interface Props {
   onChange: (data: deliveryInteface) => void
   cartItem: cartType['items'][]
+}
+
+enum Lang {
+  RUS = 'rus',
+  ENG = 'eng',
 }
 
 export const CdekMap: React.FC<Props> = ({ onChange, cartItem }) => {
@@ -34,7 +39,7 @@ export const CdekMap: React.FC<Props> = ({ onChange, cartItem }) => {
         servicePath: 'http://localhost:3000/api/cdek',
         defaultLocation: [37.6173, 55.7558],
         apiKey: 'aeec048c-a096-48fc-b923-e3322f7ffe02',
-        lang: Lang.RUS,
+        lang: 'rus' as Lang,
         offices: null,
         goods: [
           {
