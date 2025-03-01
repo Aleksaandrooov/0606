@@ -1,12 +1,12 @@
 export const buyerArr = [
-  { name: 'Оплата', url: '' },
-  { name: 'О доставке', url: '' },
-  { name: 'Возврат', url: '' },
-  { name: 'Контакты', url: '' },
+  { name: 'Оплата', url: '/information/payment' },
+  { name: 'О доставке', url: '/information/payment?type=delivery' },
+  { name: 'Возврат', url: '/information/payment?type=return' },
+  { name: 'Контакты', url: '/information/payment?type=contacts' },
 ]
 export const InformationArr = [
-  { name: 'Политика Конфиденциальности', url: '' },
-  { name: 'Договор оферты', url: '' },
+  { name: 'Политика Конфиденциальности', url: '/information/company' },
+  { name: 'Договор оферты', url: '/information/company?type=agreement' },
 ]
 
 export const icons = [

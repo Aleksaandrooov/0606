@@ -1,9 +1,9 @@
-import { Button } from '@/components/ui/button';
-import { Container } from '@/components/ui/container';
-import { WbIcon } from '@/lib/Components/wb';
-import { CircleAlert, List } from 'lucide-react';
-import Link from 'next/link';
-import React from 'react';
+import { Button } from '@/components/ui/button'
+import { Container } from '@/components/ui/container'
+import { WbIcon } from '@/lib/Components/wb'
+import { CircleAlert, List } from 'lucide-react'
+import Link from 'next/link'
+import React from 'react'
 
 export const itemHome = [
   {
@@ -14,15 +14,19 @@ export const itemHome = [
   },
   {
     name: 'Быстрая доставка',
-    span: 'Доставка в любую точку миру, в самые короткие сроки и гарантией что товар не повредится',
+    span: 'Доставка в любую точку мира в кратчайшие сроки с гарантией, что товар не повредится',
+    details: true,
   },
   {
     name: 'Товары на Wildberries',
-    span: 'Оффицально зарегестрированный аккаунт на wildbiries с более 50 отзывами',
+    span: 'Официально зарегистрированный аккаунт на Wildberries с более чем 50 отзывами',
     buttonWb: true,
   },
-  { name: 'Качество', span: 'Высокое качество каждого товара' },
-];
+  {
+    name: 'Качество',
+    span: 'Высокое качество каждого товара и проверенные производители',
+  },
+]
 
 export const Items = () => {
   return (
@@ -30,15 +34,17 @@ export const Items = () => {
       {itemHome.map((obj, i) => (
         <div
           key={i}
-          className="rounded-xl my-10 max-lg:my-0 border text-center py-5 max-sm:py-3 px-2 flex flex-col">
+          className="rounded-xl my-10 max-lg:my-0 border text-center py-5 max-sm:py-3 px-2 flex flex-col"
+        >
           <h1 className="text-xl mb-2 max-md:text-base">{obj.name}</h1>
           <span className="text-sm text-neutral-400 flex-1 max-md:text-xs">{obj.span}</span>
           <div className="mt-4 flex justify-center gap-2">
-            {!obj.catalog ? (
-              <Link href={'/information/payment'}>
+            {obj.details ? (
+              <Link href={'/information/payment?type=delivery'}>
                 <Button
                   className="flex gap-2 max-md:text-xs max-md:px-3 max-md:h-8"
-                  variant="outline">
+                  variant="outline"
+                >
                   Подробнее
                   <CircleAlert size={18} />
                 </Button>
@@ -47,7 +53,8 @@ export const Items = () => {
               <Link href={'/catalog'}>
                 <Button
                   className="flex gap-2 max-md:text-xs max-md:px-3 max-md:h-8"
-                  variant="outline">
+                  variant="outline"
+                >
                   Каталог <List size={18} />
                 </Button>
               </Link>
@@ -63,5 +70,5 @@ export const Items = () => {
         </div>
       ))}
     </Container>
-  );
-};
+  )
+}

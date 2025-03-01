@@ -1,9 +1,23 @@
-import Link from 'next/link';
-import React from 'react';
+'use client'
+
+import Link from 'next/link'
+import { useSearchParams } from 'next/navigation'
+import React, { useEffect, useRef } from 'react'
 
 export const CompanyOfert = () => {
+  const ref = useRef<HTMLDivElement | null>(null)
+  const params = useSearchParams()
+  const type = params.get('type') == 'agreement'
+  useEffect(() => {
+    if (type && ref.current)
+      window.scrollTo({
+        top: ref.current.offsetTop - 100,
+        behavior: 'smooth',
+      })
+  }, [type])
+
   return (
-    <div>
+    <div ref={ref}>
       <h3>1. Общие положения</h3>
       <h4>
         1.1. Настоящий Договор публичной оферты (далее — Договор) определяет порядок предоставления
@@ -156,5 +170,5 @@ export const CompanyOfert = () => {
       </h4>
       <h4>9.4. Публикация настоящего Договора на Сайте является его акцептом ИП.</h4>
     </div>
-  );
-};
+  )
+}

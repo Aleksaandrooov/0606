@@ -1,8 +1,22 @@
-import React from 'react'
+'use client'
+
+import { useSearchParams } from 'next/navigation'
+import React, { useEffect, useRef } from 'react'
 
 export const PaymentContacts = () => {
+  const ref = useRef<HTMLDivElement | null>(null)
+  const params = useSearchParams()
+  const type = params.get('type') === 'contacts'
+  useEffect(() => {
+    if (type && ref.current)
+      window.scrollTo({
+        top: ref.current?.offsetTop - 100,
+        behavior: 'smooth',
+      })
+  }, [type])
+
   return (
-    <div className="">
+    <div ref={ref}>
       <h3>О себе</h3>
       <h4>Индивидуальный предприниматель Лепков Никита Дмитриевич УНП 791315000</h4>
       <h3>Связаться со мной</h3>

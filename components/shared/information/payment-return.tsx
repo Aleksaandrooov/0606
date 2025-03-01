@@ -1,12 +1,24 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Download } from 'lucide-react'
+import { useSearchParams } from 'next/navigation'
 
 export const PaymentReturn = () => {
+  const ref = useRef<HTMLDivElement | null>(null)
+  const params = useSearchParams()
+  const type = params.get('type') == 'return'
+  useEffect(() => {
+    if (type && ref.current)
+      window.scrollTo({
+        top: ref.current.offsetTop - 100,
+        behavior: 'smooth',
+      })
+  }, [type])
+
   return (
-    <div className="">
+    <div ref={ref}>
       <h4>
         Условия возврата товара В соответствии с Законом Республики Беларусь «О защите прав
         потребителей» покупатель имеет право отказаться от товара надлежащего качества в течение 14

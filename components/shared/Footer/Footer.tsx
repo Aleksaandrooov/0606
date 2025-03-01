@@ -1,8 +1,8 @@
-import { Button } from '@/components/ui/button';
-import { Container } from '@/components/ui/container';
-import { buyerArr, icons, InformationArr } from '@/lib/Array/footerArray';
-import Link from 'next/link';
-import React from 'react';
+import { Button } from '@/components/ui/button'
+import { Container } from '@/components/ui/container'
+import { buyerArr, icons, InformationArr } from '@/lib/Array/footerArray'
+import Link from 'next/link'
+import React from 'react'
 
 export const Footer = () => {
   return (
@@ -15,8 +15,9 @@ export const Footer = () => {
               {buyerArr.map((obj, i) => (
                 <Link
                   className="text-sm max-sm:text-xs text-nowrap text-neutral-400 hover:text-white transition-all"
-                  href={'/information/payment'}
-                  key={i}>
+                  href={obj.url}
+                  key={i}
+                >
                   {obj.name}
                 </Link>
               ))}
@@ -28,8 +29,9 @@ export const Footer = () => {
               {InformationArr.map((obj, i) => (
                 <Link
                   className="text-sm max-sm:text-xs text-neutral-400 hover:text-white transition-all"
-                  href={'/information/company'}
-                  key={i}>
+                  href={obj.url}
+                  key={i}
+                >
                   {obj.name}
                 </Link>
               ))}
@@ -50,5 +52,5 @@ export const Footer = () => {
         </div>
       </Container>
     </footer>
-  );
-};
+  )
+}

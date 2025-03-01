@@ -1,8 +1,22 @@
-import React from 'react';
+'use client'
+
+import { useSearchParams } from 'next/navigation'
+import React, { useEffect, useRef } from 'react'
 
 export const PaymentDelivery = () => {
+  const ref = useRef<HTMLDivElement | null>(null)
+  const params = useSearchParams()
+  const type = params.get('type') == 'delivery'
+  useEffect(() => {
+    if (type && ref.current)
+      window.scrollTo({
+        top: ref.current.offsetTop - 100,
+        behavior: 'smooth',
+      })
+  }, [type])
+
   return (
-    <div>
+    <div ref={ref}>
       <h3>1. Способы доставки</h3>
       <h4>
         Доставка осуществляется логистической компанией СДЕК на основании договора №IM-BY-MOG7-21.
@@ -93,5 +107,5 @@ export const PaymentDelivery = () => {
         </li>
       </ul>
     </div>
-  );
-};
+  )
+}
