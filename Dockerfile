@@ -1,9 +1,9 @@
-# === Stage 1: Установка зависимостей ===
 FROM node:20-alpine AS deps
 WORKDIR /app
 
 COPY package.json package-lock.json ./
 COPY prisma ./prisma
+COPY .env .env
 
 RUN npm ci
 
