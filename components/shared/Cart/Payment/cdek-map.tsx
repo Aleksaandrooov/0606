@@ -3,13 +3,25 @@
 import React, { useEffect } from 'react'
 import CDEKWidget, { Lang } from '@cdek-it/widget'
 import { deliveryInteface } from './state/payment-state'
+import { cartType } from '@/app/services/dto/cartTypes'
 
 interface Props {
   onChange: (data: deliveryInteface) => void
+  cartItem: cartType['items'][]
 }
 
-export const CdekMap: React.FC<Props> = ({ onChange }) => {
+export const CdekMap: React.FC<Props> = ({ onChange, cartItem }) => {
   useEffect(() => {
+    const { width, height, length, weight } = cartItem.reduce(
+      (sum, { productItem: { width, height, lenght, weight } }) => ({
+        width: sum.width + width,
+        height: sum.height + height,
+        length: sum.length + lenght,
+        weight: sum.weight + weight,
+      }),
+      { width: 0, height: 0, length: 0, weight: 0 },
+    )
+
     const timeOut = setTimeout(() => {
       new CDEKWidget({
         from: {
@@ -26,10 +38,10 @@ export const CdekMap: React.FC<Props> = ({ onChange }) => {
         offices: null,
         goods: [
           {
-            width: 10,
-            height: 10,
-            length: 10,
-            weight: 10,
+            width,
+            height,
+            length,
+            weight,
           },
         ],
         currency: 'RUB',

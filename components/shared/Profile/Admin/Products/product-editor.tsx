@@ -124,14 +124,13 @@ export const ProductEditor: React.FC<Props> = ({
               />
             ))}
           {!formSelect && <FormInput name="article" label="Артикул (wb)" />}
-          {formSelect && (
-            <div className="border p-3 rounded-md flex flex-col gap-3">
-              <h1 className="text-sm">Габариты упаковки товара</h1>
-              <FormInput name="length" label="Длина, см" />
-              <FormInput name="width" label="Ширина, см" />
-              <FormInput name="height" label="Высота, см" />
-            </div>
-          )}
+          <div className="border p-3 rounded-md flex flex-col gap-3">
+            <h1 className="text-sm">Габариты упаковки товара</h1>
+            <FormInput name="length" label="Длина, см" />
+            <FormInput name="width" label="Ширина, см" />
+            <FormInput name="height" label="Высота, см" />
+            <FormInput name="weight" label="Вес, кг" />
+          </div>
           {formSelect && (
             <div className="border p-3 rounded-md flex flex-col gap-3">
               <h1 className="text-sm">Размеры товара</h1>

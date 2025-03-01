@@ -48,6 +48,11 @@ model Product {
     description String?
     article     String?
 
+    width  Int
+    height Int
+    lenght Int
+    weight Int
+
     cartItem        CartItem[]
     characteristics Characteristics[]
 

@@ -1,16 +1,16 @@
-'use client';
+'use client'
 
-import React, { useEffect } from 'react';
-import { PayCart } from './pay-cart';
-import { FormProvider } from 'react-hook-form';
-import { FormInput } from '@/lib/formInpit/formInput';
-import { PaymentState } from './state/payment-state';
-import { PaymentFormState } from './state/payment-form-state';
-import { redirect } from 'next/navigation';
-import { CdekMap } from './cdek-map';
+import React, { useEffect } from 'react'
+import { PayCart } from './pay-cart'
+import { FormProvider } from 'react-hook-form'
+import { FormInput } from '@/lib/formInpit/formInput'
+import { PaymentState } from './state/payment-state'
+import { PaymentFormState } from './state/payment-form-state'
+import { redirect } from 'next/navigation'
+import { CdekMap } from './cdek-map'
 
 export const DeliveryCart = () => {
-  const { user, form } = PaymentFormState();
+  const { user, form } = PaymentFormState()
   const {
     onPaymentSumbit,
     totalPrice,
@@ -22,13 +22,13 @@ export const DeliveryCart = () => {
     delivery,
     currencyValue,
     currency,
-  } = PaymentState(user?.id);
+  } = PaymentState(user?.id)
 
   useEffect(() => {
     if (!cartItem.length && !loadingCart) {
-      redirect('/cart');
+      redirect('/cart')
     }
-  }, [cartItem, loadingCart]);
+  }, [cartItem, loadingCart])
 
   return (
     <div className="flex gap-8 mt-10 xl:justify-around max-xl:flex-col">
@@ -52,7 +52,7 @@ export const DeliveryCart = () => {
             <h1 className="text-lg">Способ доставки</h1>
             {error && <h2 className="text-sm text-red-500 rounded-md">Выберите способ доставки</h2>}
           </div>
-          <CdekMap onChange={(data) => changeDelivery(data)} />
+          <CdekMap cartItem={cartItem} onChange={(data) => changeDelivery(data)} />
         </div>
       </div>
       <PayCart
@@ -64,5 +64,5 @@ export const DeliveryCart = () => {
         loading={loading}
       />
     </div>
-  );
-};
+  )
+}

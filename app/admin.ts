@@ -47,7 +47,8 @@ export const createProduct = async (
   images: File[],
 ) => {
   try {
-    const { description, title, price, quntity, article, oldPrice } = data
+    const { description, title, price, quntity, article, oldPrice, weight, height, length, width } =
+      data
     const sizes = sizesArray.filter((obj) => obj.price && obj.techSize && obj.wbSize)
     const characteristics = charact
       .filter((obj) => obj.id && obj.type)
@@ -106,6 +107,10 @@ export const createProduct = async (
         quntity: Number(quntity),
         image: savedFiles,
         article,
+        width: Number(width),
+        weight: Number(weight),
+        height: Number(height),
+        lenght: Number(length),
       },
     })
 
@@ -134,7 +139,8 @@ export const editProduct = async (
   id: number,
 ) => {
   try {
-    const { title, quntity, price, description, article, oldPrice } = data
+    const { title, quntity, price, description, article, oldPrice, weight, height, length, width } =
+      data
     const product = await prisma.product.findFirst({
       where: {
         id,
@@ -157,6 +163,10 @@ export const editProduct = async (
         price: Number(price),
         article,
         description: description || '',
+        width: Number(width),
+        lenght: Number(length),
+        height: Number(height),
+        weight: Number(weight),
       },
     })
 
