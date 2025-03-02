@@ -3,8 +3,6 @@
 import React from 'react'
 import { Autoplay, Pagination } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import 'swiper/css'
-import 'swiper/css/pagination'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { ChevronRight } from 'lucide-react'
@@ -12,6 +10,8 @@ import { WbIcon } from '@/lib/Components/wb'
 import { currencyStore } from '@/zustand/currency-store'
 import { currencySimvol } from '@/lib/Array/currency-simvol'
 import { Post } from '@prisma/client'
+import 'swiper/css/pagination'
+import 'swiper/css'
 
 export const Poster = ({ posts }: { posts: Post[] }) => {
   const { currency, currencyValue } = currencyStore()
@@ -22,10 +22,10 @@ export const Poster = ({ posts }: { posts: Post[] }) => {
       slidesPerView={1}
       loop={true}
       pagination={{ clickable: true }}
-      // autoplay={{
-      //   delay: 3000,
-      //   disableOnInteraction: false,
-      // }}
+      autoplay={{
+        delay: 3000,
+        disableOnInteraction: false,
+      }}
       modules={[Pagination, Autoplay]}
       className="mySwiper1 w-full"
     >

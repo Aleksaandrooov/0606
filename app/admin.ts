@@ -91,7 +91,7 @@ export const createProduct = async (
     for (const item of images) {
       if (item instanceof File) {
         const name = Date.now() + '-' + item.name
-        const filePath = path.join(process.cwd(), 'public', `${name}`)
+        const filePath = path.join('public', name)
         const buffer = Buffer.from(await item.arrayBuffer())
         fs.writeFileSync(filePath, buffer)
         savedFiles.push(name)
@@ -225,7 +225,7 @@ export const deleteProduct = async (id: number) => {
     })
 
     product.image.map((obj) => {
-      const filePath = path.join(process.cwd(), 'public', obj)
+      const filePath = path.join('public', obj)
       fs.unlinkSync(filePath)
     })
   } catch (error) {
@@ -239,7 +239,7 @@ export const addPost = async (data: TFormPostAdd) => {
     const { title, img, text, price, wbUrl, buttonText, buttonUrl } = data
 
     const name = Date.now() + '-' + img[0].name
-    const filePath = path.join(process.cwd(), 'public', name)
+    const filePath = path.join('public', name)
     const buffer = Buffer.from(await img[0].arrayBuffer())
     fs.writeFileSync(filePath, buffer)
 
@@ -268,7 +268,7 @@ export const deletePost = async (id: number) => {
       },
     })
 
-    const filePath = path.join(process.cwd(), 'public', post.img)
+    const filePath = path.join('public', post.img)
     fs.unlinkSync(filePath)
   } catch (error) {
     console.log(error, 'Ошибка удаления поста')
