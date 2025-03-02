@@ -28,6 +28,7 @@ export const CdekMap: React.FC<Props> = ({ onChange, cartItem }) => {
     )
 
     const timeOut = setTimeout(() => {
+      //@ts-ignore
       new CDEKWidget({
         from: {
           country_code: 'RU',
@@ -40,11 +41,6 @@ export const CdekMap: React.FC<Props> = ({ onChange, cartItem }) => {
         defaultLocation: [37.6173, 55.7558],
         apiKey: 'aeec048c-a096-48fc-b923-e3322f7ffe02',
         lang: 'rus' as Lang,
-        offices: null,
-        debug: false,
-        sender: false,
-        popup: false,
-        canChoose: false,
         goods: [
           {
             width,
@@ -55,36 +51,6 @@ export const CdekMap: React.FC<Props> = ({ onChange, cartItem }) => {
         ],
         currency: 'RUB',
         root: 'cdek-map',
-        hideFilters: {
-          have_cashless: false,
-          have_cash: false,
-          is_dressing_room: false,
-          type: false,
-        },
-        forceFilters: {
-          have_cash: false,
-          have_cashless: false,
-          is_dressing_room: false,
-          type: null,
-          allowed_cod: false,
-        },
-        hideDeliveryOptions: {
-          door: false,
-          office: false,
-        },
-        requirePostcode: false,
-        fixBounds: null,
-        officesRaw: [],
-        tariff: {},
-        tariffs: {
-          door: [],
-          office: [],
-          pickup: [],
-        },
-        selected: {
-          door: null,
-          office: null,
-        },
         onChoose: (typeOf, tarif, office) => {
           const name = 'address' in office ? office.address : office.name
           const type = 'address' in office ? office.type : typeOf

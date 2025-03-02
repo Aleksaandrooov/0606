@@ -8,6 +8,7 @@ export const formReset = (form: UseFormReturn<TFormProductEditor>) => {
     item: '',
     length: '',
     oldPrice: '',
+    weight: '',
     width: '',
     height: '',
     price: '',
