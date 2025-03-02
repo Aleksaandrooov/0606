@@ -42,7 +42,10 @@ export const PayCart = ({
           .map((obj) => (
             <div key={obj.id} className="h-[60px] flex gap-2 items-center">
               <div className="max-w-[60px] mr-1">
-                <img className="max-h-[50px]" src={'/' + obj.productItem.image[0]} />
+                <img
+                  className="max-h-[50px]"
+                  src={'https://0606.store/' + obj.productItem.image[0]}
+                />
               </div>
               <h2 className="text-xs line-clamp-3 flex-1">{obj.productItem.title}</h2>
               <div className="text-end flex items-center gap-1">

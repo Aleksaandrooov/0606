@@ -1,22 +1,22 @@
-import { cartType, patchCartType } from '@/app/services/dto/cartTypes';
-import { Button } from '@/components/ui/button';
-import { currencySimvol } from '@/lib/Array/currency-simvol';
-import { numberReplace } from '@/lib/numberReplace';
-import { currencyFormat } from '@/zustand/currency-store';
-import { Minus, Plus, Trash2 } from 'lucide-react';
-import Link from 'next/link';
-import React, { useState } from 'react';
+import { cartType, patchCartType } from '@/app/services/dto/cartTypes'
+import { Button } from '@/components/ui/button'
+import { currencySimvol } from '@/lib/Array/currency-simvol'
+import { numberReplace } from '@/lib/numberReplace'
+import { currencyFormat } from '@/zustand/currency-store'
+import { Minus, Plus, Trash2 } from 'lucide-react'
+import Link from 'next/link'
+import React, { useState } from 'react'
 
 type Props = cartType['items'] & {
   currency: {
-    KZT: number | null;
-    BYN: number | null;
-    RUB: number;
-  };
-  currencyValue: currencyFormat;
-  deleteCart: (id: number) => Promise<unknown>;
-  updateCart: ({ type, id }: patchCartType) => Promise<unknown>;
-};
+    KZT: number | null
+    BYN: number | null
+    RUB: number
+  }
+  currencyValue: currencyFormat
+  deleteCart: (id: number) => Promise<unknown>
+  updateCart: ({ type, id }: patchCartType) => Promise<unknown>
+}
 
 export const Item = ({
   productItem,
@@ -26,27 +26,27 @@ export const Item = ({
   deleteCart,
   updateCart,
 }: Props) => {
-  const [disabled, isDisabled] = useState(false);
-  const format = currencySimvol.find((obj) => obj.name === currencyValue)?.format;
+  const [disabled, isDisabled] = useState(false)
+  const format = currencySimvol.find((obj) => obj.name === currencyValue)?.format
   const priceToFormat =
-    Math.round((productItem.price * (currency[currencyValue] as number)) / 10) * 10;
+    Math.round((productItem.price * (currency[currencyValue] as number)) / 10) * 10
 
   const deleteItem = () => {
-    isDisabled(true);
+    isDisabled(true)
     deleteCart(productItem.id).then(() => {
-      isDisabled(false);
-    });
-  };
+      isDisabled(false)
+    })
+  }
 
   const updateItem = (type: patchCartType['type']) => {
-    isDisabled(true);
-    updateCart({ type, id: productItem.id }).then(() => isDisabled(false));
-  };
+    isDisabled(true)
+    updateCart({ type, id: productItem.id }).then(() => isDisabled(false))
+  }
 
   return (
     <div className="h-[100px] flex gap-5 max-sm:gap-2 items-center relative">
       <div className="w-[80px] max-md:w-[60px]">
-        <img className="h-full w-full" src={'/' + productItem.image[0]} />
+        <img className="h-full w-full" src={'https://0606.store/' + productItem.image[0]} />
       </div>
       <Link href={'/catalog/product/' + productItem.id} className="my-auto flex-1">
         <h1 className="max-sm:text-sm">{productItem.title}</h1>
@@ -59,7 +59,8 @@ export const Item = ({
             disabled={disabled || quantity == 1}
             variant="outline"
             size="sm"
-            className="h-7 w-7">
+            className="h-7 w-7"
+          >
             <Minus size={18} />
           </Button>
           <h1>{quantity}</h1>
@@ -68,7 +69,8 @@ export const Item = ({
             disabled={disabled || productItem.quntity <= quantity}
             variant="outline"
             size="sm"
-            className="h-7 w-7">
+            className="h-7 w-7"
+          >
             <Plus size={18} />
           </Button>
         </div>
@@ -95,10 +97,11 @@ export const Item = ({
           disabled={disabled}
           variant="outline"
           size="sm"
-          className="px-2 max-sm:absolute right-0 -bottom-2 max-sm:h-7">
+          className="px-2 max-sm:absolute right-0 -bottom-2 max-sm:h-7"
+        >
           <Trash2 size={18} className="size-[18px] max-sm:size-[14px]" />
         </Button>
       </div>
     </div>
-  );
-};
+  )
+}

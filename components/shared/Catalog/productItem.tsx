@@ -16,7 +16,7 @@ export const ProductItem = ({ title, image, price, id, article, quntity, oldPric
           <img
             className="max-h-full px-4 group-hover:scale-[1.03] transition-all"
             alt={title}
-            src={'/' + image[0]}
+            src={'https://0606.store/' + image[0]}
           />
         </div>
         <h1 className="mt-4 flex-1 text-center px-4 max-md:px-0 line-clamp-3 overflow-hidden max-md:text-sm">

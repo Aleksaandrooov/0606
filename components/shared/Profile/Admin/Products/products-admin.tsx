@@ -99,7 +99,7 @@ export const ProductsAdmin = ({
               src={
                 !changeProduct
                   ? URL.createObjectURL(images.find((obj) => obj !== '') as Blob)
-                  : '/' + String(images.find((obj) => obj))
+                  : 'https://0606.store/' + String(images.find((obj) => obj))
               }
             />
           ) : (

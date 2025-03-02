@@ -1,11 +1,11 @@
-import { ReviewStar } from '@/lib/Components/reviewStar';
-import React from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import { Navigation } from 'swiper/modules';
-import { OrdersInter } from '@/app/services/dto/ordersDto';
-import { DateArray } from '@/lib/Array/date';
+import { ReviewStar } from '@/lib/Components/reviewStar'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import React from 'react'
+import 'swiper/css'
+import 'swiper/css/navigation'
+import { Navigation } from 'swiper/modules'
+import { OrdersInter } from '@/app/services/dto/ordersDto'
+import { DateArray } from '@/lib/Array/date'
 
 export const SwiperReviews = ({ items }: { items?: OrdersInter['data']['feedbacks'] }) => {
   return (
@@ -24,7 +24,8 @@ export const SwiperReviews = ({ items }: { items?: OrdersInter['data']['feedback
       }}
       navigation={true}
       modules={[Navigation]}
-      className="mySwiper w-full">
+      className="mySwiper w-full"
+    >
       {items
         ?.filter((obj) => obj.pros || obj.text)
         .map((obj) => (
@@ -63,5 +64,5 @@ export const SwiperReviews = ({ items }: { items?: OrdersInter['data']['feedback
           </SwiperSlide>
         ))}
     </Swiper>
-  );
-};
+  )
+}

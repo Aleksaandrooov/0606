@@ -95,7 +95,10 @@ export const OrderOpen: React.FC<Props> = ({
           {items.map((obj, i) => (
             <div className="h-[80px] flex gap-2 items-center max-sm:text-sm" key={i}>
               <div className="w-[80px] max-sm:w-[70px]">
-                <img className="max-h-[80px]" src={'/' + obj.productItem.image[0]} />
+                <img
+                  className="max-h-[80px]"
+                  src={'https://0606.store/' + obj.productItem.image[0]}
+                />
               </div>
               <h1 className="flex-1 line-clamp-2">{obj.productItem.title}</h1>
               <h2>x {obj.quantity}</h2>
