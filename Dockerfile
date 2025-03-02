@@ -1,9 +1,9 @@
 FROM node:20-alpine AS deps
 WORKDIR /app
 
+COPY next.config.ts ./next.config.ts
 COPY package.json package-lock.json ./
 COPY prisma ./prisma
-COPY next.config.ts ./next.config.ts
 COPY .env .env
 
 RUN npm ci
