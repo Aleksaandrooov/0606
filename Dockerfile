@@ -3,7 +3,7 @@ WORKDIR /app
 
 COPY package.json package-lock.json ./
 COPY prisma ./prisma
-COPY next.config.ts .
+COPY next.config.ts ./next.config.ts
 COPY .env .env
 
 RUN npm ci
