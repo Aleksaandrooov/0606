@@ -1,10 +1,10 @@
 FROM node:20-alpine AS deps
 WORKDIR /app
 
-COPY next.config.ts ./next.config.ts
+COPY /app/next.config.ts ./next.config.ts
 COPY package.json package-lock.json ./
 COPY prisma ./prisma
-COPY .env .env
+ENV NODE_ENV=production
 
 RUN npm ci
 
@@ -22,7 +22,6 @@ RUN npm run build
 FROM node:20-alpine AS runner
 WORKDIR /app
 
-ENV NODE_ENV=production
 
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
