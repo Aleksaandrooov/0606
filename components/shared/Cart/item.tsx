@@ -53,7 +53,7 @@ export const Item = ({
         <span className="text-neutral-400 text-sm max-sm:text-xs">Перейти к товару</span>
       </Link>
       {productItem.quntity ? (
-        <div className="md:flex-1 max-sm:absolute right-10 -bottom-2 justify-center flex gap-3">
+        <div className="md:flex-1 max-sm:absolute right-10 -bottom-2 justify-center items-center flex gap-3">
           <Button
             onClick={() => updateItem('decrement')}
             disabled={disabled || quantity == 1}

@@ -1,21 +1,20 @@
-import { patchCartType } from '@/app/services/dto/cartTypes';
-import { authOptions } from '@/components/shared/auth-options';
-import { updateCart } from '@/lib/updateCart';
-import { prisma } from '@/prisma/prisma-client';
-import { getServerSession } from 'next-auth';
-import { NextRequest, NextResponse } from 'next/server';
+import { patchCartType } from '@/app/services/dto/cartTypes'
+import { authOptions } from '@/components/shared/auth-options'
+import { prisma } from '@/prisma/prisma-client'
+import { getServerSession } from 'next-auth'
+import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(req: NextRequest) {
   try {
-    let token = req.cookies.get('cartToken')?.value;
-    const session = await getServerSession(authOptions);
+    let token = req.cookies.get('cartToken')?.value
+    const session = await getServerSession(authOptions)
 
     if (!token && session) {
-      token = session.user.cartToken;
+      token = session.user.cartToken
     }
 
     if (!token) {
-      return NextResponse.json({ item: [] });
+      return NextResponse.json({ item: [] })
     }
 
     const cart = await prisma.cart.findFirst({
@@ -32,46 +31,46 @@ export async function GET(req: NextRequest) {
           },
         },
       },
-    });
+    })
 
     if (!cart) {
-      req.cookies.delete('cartToken');
-      return NextResponse.json({ item: [] });
+      req.cookies.delete('cartToken')
+      return NextResponse.json({ item: [] })
     }
 
-    return NextResponse.json(cart);
+    return NextResponse.json(cart)
   } catch (error) {
-    console.log(error, 'Получение корзины');
-    return NextResponse.error();
+    console.log(error, 'Получение корзины')
+    return NextResponse.error()
   }
 }
 
 export async function POST(req: NextRequest) {
   try {
-    let token = req.cookies.get('cartToken')?.value;
-    const session = await getServerSession(authOptions);
+    let token = req.cookies.get('cartToken')?.value
+    const session = await getServerSession(authOptions)
 
     if (!token && session) {
-      token = session.user.cartToken;
+      token = session.user.cartToken
     }
 
-    const id = (await req.json()) as number;
+    const id = (await req.json()) as number
 
     if (!token) {
-      token = crypto.randomUUID();
+      token = crypto.randomUUID()
     }
 
     let cart = await prisma.cart.findFirst({
       where: {
         token,
       },
-    });
+    })
     if (!cart) {
       cart = await prisma.cart.create({
         data: {
           token,
         },
-      });
+      })
     }
 
     const findCartItem = await prisma.cartItem.findFirst({
@@ -79,14 +78,14 @@ export async function POST(req: NextRequest) {
         productItemId: id,
         cartId: cart.id,
       },
-    });
+    })
 
     if (findCartItem) {
       await prisma.cartItem.delete({
         where: {
           id: findCartItem.id,
         },
-      });
+      })
     } else {
       await prisma.cartItem.create({
         data: {
@@ -94,55 +93,69 @@ export async function POST(req: NextRequest) {
           cartId: cart.id,
           quantity: 1,
         },
-      });
+      })
     }
 
-    const update = await updateCart(cart.id);
-    const resp = NextResponse.json(update);
+    const update = await prisma.cart.findFirst({
+      where: {
+        id: cart.id,
+      },
+      include: {
+        items: {
+          include: {
+            productItem: true,
+          },
+          orderBy: {
+            createdAt: 'desc',
+          },
+        },
+      },
+    })
+    const resp = NextResponse.json(update)
 
     if (!session) {
       resp.cookies.set('cartToken', token, {
         maxAge: 2147483647,
-      });
+      })
     }
 
-    return resp;
+    return resp
   } catch (error) {
-    console.log(error, 'Добавление товара');
-    return NextResponse.error();
+    console.log(error, 'Добавление товара')
+    return NextResponse.error()
   }
 }
 
 export async function PATCH(req: NextRequest) {
   try {
-    let token = req.cookies.get('cartToken')?.value;
-    const data = (await req.json()) as patchCartType;
-    const session = await getServerSession(authOptions);
+    let token = req.cookies.get('cartToken')?.value
+    const data = (await req.json()) as patchCartType
+    const session = await getServerSession(authOptions)
 
     if (!token && session) {
-      token = session.user.cartToken;
+      token = session.user.cartToken
     }
 
     if (!token) {
-      return NextResponse.error();
+      return NextResponse.error()
     }
 
     const cart = await prisma.cart.findFirst({
       where: {
         token,
       },
-    });
+    })
 
     const cartItem = await prisma.cartItem.findFirst({
       where: {
         productItemId: data.id,
         cartId: cart!.id,
       },
-    });
+    })
 
     if (!cart || !cartItem) {
-      req.cookies.delete('cartToken');
-      return NextResponse.error();
+      req.cookies.delete('cartToken')
+      return NextResponse.error()
     }
 
     if (data.type === 'increment') {
@@ -155,7 +168,7 @@ export async function PATCH(req: NextRequest) {
             increment: 1,
           },
         },
-      });
+      })
     } else {
       await prisma.cartItem.update({
         where: {
@@ -166,21 +179,35 @@ export async function PATCH(req: NextRequest) {
             decrement: 1,
           },
         },
-      });
+      })
     }
 
-    const update = await updateCart(cart.id);
-    const resp = NextResponse.json(update);
+    const update = await prisma.cart.findFirst({
+      where: {
+        id: cart.id,
+      },
+      include: {
+        items: {
+          include: {
+            productItem: true,
+          },
+          orderBy: {
+            createdAt: 'desc',
+          },
+        },
+      },
+    })
+    const resp = NextResponse.json(update)
 
     if (!session) {
       resp.cookies.set('cartToken', token, {
         maxAge: 2147483647,
-      });
+      })
     }
 
-    return resp;
+    return resp
   } catch (error) {
-    console.log(error, 'Обновление товара');
-    return NextResponse.error();
+    console.log(error, 'Обновление товара')
+    return NextResponse.error()
   }
 }

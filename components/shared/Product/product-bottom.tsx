@@ -18,12 +18,17 @@ export const ProductBottom = ({ article }: { article: string | null }) => {
 
   useEffect(() => {
     isLoading(true)
-    async function fetch() {
-      const data = await Api.orders.OrdersFetch(Number(article))
-      setOrders(data)
+    try {
+      async function fetch() {
+        const data = await Api.orders.OrdersFetch(Number(article) + 2)
+        setOrders(data)
+        isLoading(false)
+      }
+      fetch()
+    } catch (error) {
+      console.log(error)
       isLoading(false)
     }
-    fetch()
   }, [])
 
   const { countReviews, reviewsGrade, itemsReviews } = reviewGrade(orders)
@@ -32,7 +37,7 @@ export const ProductBottom = ({ article }: { article: string | null }) => {
     <div className="mb-10">
       <Button variant="secondary">Отзывы</Button>
       <div className="flex gap-5 mt-10 max-lg:flex-col">
-        {!loading && orders && orders?.data.countArchive > 0 ? (
+        {!loading && orders?.data && orders?.data.countArchive > 0 ? (
           <div className="lg:border-r lg:pr-5">
             <div className="flex gap-3 items-center">
               <h1 className="text-4xl">{reviewsGrade}</h1>

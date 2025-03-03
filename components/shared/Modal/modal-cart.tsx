@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import {
   Sheet,
@@ -7,33 +7,38 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from '@/components/ui/sheet';
-import { currencySimvol } from '@/lib/Array/currency-simvol';
-import { numberReplace } from '@/lib/numberReplace';
-import { cartStore } from '@/zustand/cart-store';
-import { currencyStore } from '@/zustand/currency-store';
-import { ChevronRight, ShoppingBasketIcon, ShoppingCart } from 'lucide-react';
-import { useSession } from 'next-auth/react';
-import Link from 'next/link';
-import React, { useState } from 'react';
-import { ModalCartItem } from './modal-cart-item';
+} from '@/components/ui/sheet'
+import { currencySimvol } from '@/lib/Array/currency-simvol'
+import { numberReplace } from '@/lib/numberReplace'
+import { cartStore } from '@/zustand/cart-store'
+import { currencyStore } from '@/zustand/currency-store'
+import { ChevronRight, ShoppingBasketIcon, ShoppingCart } from 'lucide-react'
+import { useSession } from 'next-auth/react'
+import Link from 'next/link'
+import React, { useState } from 'react'
+import { ModalCartItem } from './modal-cart-item'
 
 export const ModalCart = () => {
-  const { currency, currencyValue } = currencyStore();
-  const { cartItem, totalPrice, totalQuntity, postCart } = cartStore();
-  const format = currencySimvol.find((obj) => obj.name === currencyValue)?.format;
-  const [disabled, isDisabled] = useState(false);
-  const { data: session } = useSession();
+  const { currency, currencyValue } = currencyStore()
+  const { cartItem, totalPrice, totalQuntity, postCart } = cartStore()
+  const format = currencySimvol.find((obj) => obj.name === currencyValue)?.format
+  const [disabled, isDisabled] = useState(false)
+  const { data: session } = useSession()
 
   const deleteItem = (id: number) => {
-    isDisabled(true);
-    postCart(id).then(() => isDisabled(false));
-  };
+    isDisabled(true)
+    postCart(id).then(() => isDisabled(false))
+  }
 
   return (
     <Sheet>
-      <SheetTrigger className="px-2 transition-all rounded-md hover:bg-accent h-8">
+      <SheetTrigger className="px-2 transition-all rounded-md hover:bg-accent h-8 relative z-0">
         <ShoppingBasketIcon strokeWidth={1.5} />
+        {totalQuntity > 0 && (
+          <div className="absolute top-0 -right-2 bg-white rounded-full text-black text-xs w-[18px] h-[18px] flex justify-center items-center">
+            <h2>{totalQuntity}</h2>
+          </div>
+        )}
       </SheetTrigger>
       <SheetContent className="min-w-[440px] max-sm:min-w-full flex flex-col overflow-auto scroll__hidden pb-0">
         <SheetHeader>
@@ -56,7 +61,7 @@ export const ModalCart = () => {
           ))}
         </div>
         {cartItem.length > 0 ? (
-          <div className="sticky bottom-0 bg-zinc-950 pb-4">
+          <div style={{ backgroundColor: 'rgb(10, 10, 10)' }} className="sticky bottom-0 pb-4">
             <div className="mt-4 border w-full flex flex-col rounded-lg">
               {totalQuntity ? (
                 <div className="py-5 px-4 max-sm:py-3">
@@ -96,5 +101,5 @@ export const ModalCart = () => {
         )}
       </SheetContent>
     </Sheet>
-  );
-};
+  )
+}

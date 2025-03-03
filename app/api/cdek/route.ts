@@ -17,8 +17,8 @@ const CONFIG = {
   baseUrl: 'https://api.cdek.ru/v2',
   version: '3.11.1',
   credentials: {
-    login: 'S6SStJIP05vjGXrmD1ijM3kLDz69HTR1',
-    secret: 'IY9Lkhrvo2SVTlviYlVVTzvoWIQLGerI',
+    login: process.env.CDEK_LOGIN || '',
+    secret: process.env.CDEK_PASSWORD || '',
   },
 }
 

@@ -1,23 +1,23 @@
-'use client';
+'use client'
 
-import React, { useState } from 'react';
-import { SettingItem } from './setting-item';
+import React, { useState } from 'react'
+import { SettingItem } from './setting-item'
 import {
   settingNameSchema,
   settingNumberSchema,
   settingPatronymicSchema,
   settingSurnameSchema,
-} from '@/lib/formInpit/schema';
-import { ZodType } from 'zod';
-import { User } from '@prisma/client';
-import { Button } from '@/components/ui/button';
-import { CalendarPlus2, Trash2 } from 'lucide-react';
-import { deleteSettingProfile } from '@/app/actions';
-import { useRouter } from 'next/navigation';
-import { nameType } from './dto';
+} from '@/lib/formInpit/schema'
+import { ZodType } from 'zod'
+import { User } from '@prisma/client'
+import { Button } from '@/components/ui/button'
+import { CalendarPlus2, Trash2 } from 'lucide-react'
+import { deleteSettingProfile } from '@/app/actions'
+import { useRouter } from 'next/navigation'
+import { nameType } from './dto'
 
 interface Props {
-  user: User;
+  user: User
 }
 
 const profileSettingArray: { name: nameType; label: string; type: ZodType }[] = [
@@ -25,16 +25,16 @@ const profileSettingArray: { name: nameType; label: string; type: ZodType }[] = 
   { name: 'surname', label: 'Фамилия', type: settingSurnameSchema },
   { name: 'patronymic', label: 'Отчество', type: settingPatronymicSchema },
   { name: 'number', label: 'Телефон', type: settingNumberSchema },
-];
+]
 
 export const ProfileSetting: React.FC<Props> = ({ user }) => {
-  const router = useRouter();
-  const [disabled, isDisabled] = useState(false);
+  const router = useRouter()
+  const [disabled, isDisabled] = useState(false)
   const deleteSetting = () => {
-    isDisabled(true);
-    deleteSettingProfile(user.email).then(() => isDisabled(false));
-    router.refresh();
-  };
+    isDisabled(true)
+    deleteSettingProfile(user.email).then(() => isDisabled(false))
+    router.refresh()
+  }
 
   return (
     <div className="mb-10">
@@ -56,7 +56,8 @@ export const ProfileSetting: React.FC<Props> = ({ user }) => {
           disabled={disabled}
           className="mt-4"
           variant="outline"
-          onClick={() => deleteSetting()}>
+          onClick={() => deleteSetting()}
+        >
           Сбросить <Trash2 size={18} />
         </Button>
       </div>
@@ -65,10 +66,11 @@ export const ProfileSetting: React.FC<Props> = ({ user }) => {
           Дата регистрации <CalendarPlus2 size={18} className="max-sm:size-4" />
         </h1>
         <span className="text-neutral-400 text-sm max-sm:text-xs">
+          {user.createdAt.getDate() < 10 ? 0 : ''}
           {user.createdAt.getDate()}.{user.createdAt.getMonth() + 1 <= 9 ? 0 : ''}
           {user.createdAt.getMonth() + 1}.{user.createdAt.getFullYear()}
         </span>
       </div>
     </div>
-  );
-};
+  )
+}

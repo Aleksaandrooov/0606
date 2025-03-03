@@ -98,8 +98,8 @@ model Cart {
 
     token String
 
-    totalAmount Int @default(0)
-    quantity    Int @default(0)
+    totalAmount Int @default(0) // убрать
+    quantity    Int @default(0) // убрать
 
     createdAt DateTime @default(now())
     updateAt  DateTime @updatedAt

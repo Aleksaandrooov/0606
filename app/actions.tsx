@@ -237,16 +237,6 @@ export async function createOrder(
       },
     })
 
-    await prisma.cart.update({
-      where: {
-        id: items.find((obj) => obj)?.cartId,
-      },
-      data: {
-        totalAmount: 0,
-        quantity: 0,
-      },
-    })
-
     await Promise.all(
       items
         .filter((obj) => obj.productItem.quntity)

@@ -39,7 +39,7 @@ export const CdekMap: React.FC<Props> = ({ onChange, cartItem }) => {
         },
         servicePath: 'https://0606.store/api/cdek',
         defaultLocation: [37.6173, 55.7558],
-        apiKey: 'aeec048c-a096-48fc-b923-e3322f7ffe02',
+        apiKey: process.env.YANDEX_API_MAP || '',
         lang: 'rus' as Lang,
         goods: [
           {
@@ -50,6 +50,7 @@ export const CdekMap: React.FC<Props> = ({ onChange, cartItem }) => {
           },
         ],
         currency: 'RUB',
+        debug: true,
         root: 'cdek-map',
         onChoose: (typeOf, tarif, office) => {
           const name = 'address' in office ? office.address : office.name

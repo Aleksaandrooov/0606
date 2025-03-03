@@ -33,6 +33,13 @@ export const PayCart = ({
 }) => {
   const currencyType = currencySimvol.find((obj) => obj.name === currencyValue)
   const deliveryPrice = delivery?.delivery_sum ? Number(delivery?.delivery_sum) : 0
+  const oldPrice = items.reduce((sum, acc) => {
+    return acc.productItem.oldPrice
+      ? sum + acc.productItem.quntity > 0
+        ? acc.productItem.oldPrice * acc.quantity
+        : 0
+      : sum + 0
+  }, 0)
 
   return (
     <div className="w-[350px] shrink-0 max-xl:mb-10 max-md:w-full flex flex-col gap-3 max-xl:mx-auto max-xl:w-[400px]">
@@ -97,20 +104,16 @@ export const PayCart = ({
         </div>
       )}
       <div className="rounded-xl bg-accent/50 p-5 flex flex-col gap-3">
-        <div className="flex justify-between items-center text-sm">
-          <h2>Цена без скидки</h2>
-          <CurrencyToPrice
-            className="line-through text-neutral-500"
-            oldPrice={null}
-            price={
-              items.reduce((sum, acc) => {
-                return acc.productItem.oldPrice
-                  ? sum + acc.productItem.oldPrice * acc.quantity
-                  : sum + 0
-              }, 0) + deliveryPrice
-            }
-          />
-        </div>
+        {oldPrice !== price && (
+          <div className="flex justify-between items-center text-sm">
+            <h2>Цена без скидки</h2>
+            <CurrencyToPrice
+              className="line-through text-neutral-500"
+              oldPrice={null}
+              price={oldPrice + deliveryPrice}
+            />
+          </div>
+        )}
         <div className="border-b"></div>
         <div className="flex justify-between items-center">
           <h2 className="text-lg max-sm:text-base">Итого</h2>
