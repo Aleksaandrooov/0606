@@ -1,12 +1,12 @@
-import { PaymentData } from '@/types/yokassa';
-import { currencyFormat } from '@/zustand/currency-store';
-import axios from 'axios';
+import { PaymentData } from '@/types/yokassa'
+import { currencyFormat } from '@/zustand/currency-store'
+import axios from 'axios'
 
 interface Props {
-  description: string;
-  orderId: number;
-  amount: number;
-  currency: currencyFormat;
+  description: string
+  orderId: number
+  amount: number
+  currency: currencyFormat
 }
 
 export async function createPayment(details: Props) {
@@ -29,15 +29,15 @@ export async function createPayment(details: Props) {
     },
     {
       auth: {
-        username: process.env.YOOKASSA_STORE_ID as string,
-        password: process.env.YOOKASSA_API_KEY as string,
+        username: process.env.YOOKASSA_STORE_ID || '',
+        password: process.env.YOOKASSA_API_KEY || '',
       },
       headers: {
         'Content-Type': 'application/json',
         'Idempotence-Key': Math.random().toString(36).substring(7),
       },
     },
-  );
+  )
 
-  return data;
+  return data
 }

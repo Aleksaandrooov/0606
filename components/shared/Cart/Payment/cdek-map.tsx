@@ -28,7 +28,6 @@ export const CdekMap: React.FC<Props> = ({ onChange, cartItem }) => {
     )
 
     const timeOut = setTimeout(() => {
-      //@ts-ignore
       new CDEKWidget({
         from: {
           country_code: 'RU',

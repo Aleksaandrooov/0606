@@ -8,8 +8,8 @@ import { prisma } from '@/prisma/prisma-client'
 export const authOptions: AuthOptions = {
   providers: [
     yandex({
-      clientId: process.env.YANDEX_CLIENT_ID!,
-      clientSecret: process.env.YANDEX_CLIENT_SECRET!,
+      clientId: process.env.YANDEX_CLIENT_ID || '',
+      clientSecret: process.env.YANDEX_CLIENT_SECRET || '',
 
       profile(profile) {
         return {
@@ -99,7 +99,7 @@ export const authOptions: AuthOptions = {
       },
     }),
   ],
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: process.env.NEXTAUTH_SECRET || '',
   session: {
     strategy: 'jwt',
   },

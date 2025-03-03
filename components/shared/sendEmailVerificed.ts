@@ -14,8 +14,8 @@ export const sendEmailVerificed = async ({
     port: 587,
     secure: false,
     auth: {
-      user: process.env.PROCESS_USER,
-      pass: process.env.PROCESS_PASS,
+      user: process.env.PROCESS_USER || '',
+      pass: process.env.PROCESS_PASS || '',
     },
   })
   try {
