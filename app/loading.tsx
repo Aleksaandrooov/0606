@@ -1,5 +1,5 @@
-import { Container } from '@/components/ui/container';
-import { Skeleton } from '@/components/ui/skeleton';
+import { Container } from '@/components/ui/container'
+import { Skeleton } from '@/components/ui/skeleton'
 
 export default function Loading() {
   return (
@@ -13,7 +13,7 @@ export default function Loading() {
             <Skeleton className="w-9" />
           </div>
         </div>
-        <Skeleton className="h-[600px] w-[560px] max-xl:h-[500px] max-lg:w-[400px] max-lg:h-[400px] max-md:h-[300px] max-md:w-[300px] max-sm:w-[200px] max-sm:h-[220px]" />
+        <Skeleton className="h-[500px] w-[560px] max-xl:h-[450px] max-lg:w-[400px] max-lg:h-[400px] max-md:h-[300px] max-md:w-[300px] max-sm:w-[200px] max-sm:h-[220px]" />
       </div>
       <div className="flex justify-center gap-2 items-center">
         {[...Array(3)].map((_, i) => (
@@ -26,5 +26,5 @@ export default function Loading() {
         ))}
       </Container>
     </div>
-  );
+  )
 }
