@@ -87,7 +87,10 @@ export const OrderOpen: React.FC<Props> = ({
       <div className="mt-auto overflow-auto scroll__hidden">
         <h1 className="">Товары</h1>
         <div className="flex flex-col">
-          <div className="flex gap-2 sticky top-0 pb-1 text-neutral-400 text-sm bg-zinc-950">
+          <div
+            style={{ backgroundColor: 'rgb(10, 10, 10)' }}
+            className="flex gap-2 sticky top-0 pb-1 text-neutral-400 text-sm"
+          >
             <h1 className="ml-[88px] flex-1">Название</h1>
             <h2>Кол-во</h2>
             <h3 className="ml-5 mr-3">Цена</h3>
