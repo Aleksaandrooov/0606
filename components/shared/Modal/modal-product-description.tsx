@@ -56,7 +56,10 @@ export const ModalProductDescription = ({
               <div className="text-sm">{description}</div>
             </div>
           )}
-          <div className="flex justify-between mt-auto sticky bottom-0 pb-4 pt-2 rounded-t-sm bg-zinc-950">
+          <div
+            style={{ backgroundColor: 'rgb(10, 10, 10)' }}
+            className="flex justify-between mt-auto sticky bottom-0 pb-4 pt-2 rounded-t-sm bg-zinc-950"
+          >
             <AddProductButton
               size={selectSize?.id || 0}
               count={selectSize?.quntity || 0}
