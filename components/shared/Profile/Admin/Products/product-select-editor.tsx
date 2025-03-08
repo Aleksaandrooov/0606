@@ -11,6 +11,7 @@ import { formReset } from './form-reset'
 import { UseFormReturn } from 'react-hook-form'
 import { TFormProductEditor } from '@/lib/formInpit/schema'
 import { charactInter, sizesInter } from '../../dto'
+import axios from 'axios'
 
 interface Props {
   product: (Product & { characteristics: Characteristics[]; size: Size[] })[]
@@ -21,7 +22,7 @@ interface Props {
   pushSize: () => void
   clearSize: () => void
   productValue: number | undefined
-  setImage: (d: string[]) => void
+  setImage: (d: File[]) => void
 }
 
 export const ProductSelectEditor: React.FC<Props> = ({
@@ -35,7 +36,7 @@ export const ProductSelectEditor: React.FC<Props> = ({
   changeCharact,
   setImage,
 }) => {
-  const change = (e: string) => {
+  const change = async (e: string) => {
     if (e === 'def') {
       formReset(form)
       setImage([])
@@ -45,7 +46,16 @@ export const ProductSelectEditor: React.FC<Props> = ({
     } else {
       const item = product.find((obj) => obj.id === Number(e))!
       changeProduct(Number(e))
-      setImage(item.image)
+      setImage(
+        await Promise.all(
+          item.image.map(async (obj) => {
+            const { data } = await axios.get('/' + obj, { responseType: 'arraybuffer' })
+            const blob = new Blob([data], { type: 'image/*' })
+            const file = new File([blob], obj, { type: 'image/*' })
+            return file
+          }),
+        ),
+      )
       changeSizes(
         item.size.map((obj) => {
           return {

@@ -149,6 +149,7 @@ export const editProduct = async (
   charact: charactInter[],
   id: number,
   sizesArray: sizesInter[],
+  images: File[],
 ) => {
   try {
     const sizes = sizesArray.filter((obj) => obj.techSize && obj.quntity)
@@ -162,6 +163,17 @@ export const editProduct = async (
     if (!product) {
       console.log('Ошибка редактирования')
       return NextResponse.error()
+    }
+
+    let savedFiles = []
+    for (const item of images) {
+      if (item instanceof File) {
+        const name = Date.now() + '-' + item.name
+        const filePath = path.join('public', name)
+        const buffer = Buffer.from(await item.arrayBuffer())
+        fs.writeFileSync(filePath, buffer)
+        savedFiles.push(name)
+      }
     }
 
     await prisma.product.update({
@@ -178,6 +190,7 @@ export const editProduct = async (
         lenght: Number(length),
         height: Number(height),
         weight: Number(weight),
+        image: savedFiles,
       },
     })
 
@@ -219,6 +232,10 @@ export const editProduct = async (
           })
         }),
     )
+    product.image.map((obj) => {
+      const filePath = path.join('public', obj)
+      fs.unlinkSync(filePath)
+    })
   } catch (error) {
     console.log(error, 'Ошибка редактирования')
     return NextResponse.error()

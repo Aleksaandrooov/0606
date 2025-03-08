@@ -26,17 +26,11 @@ export const ChangeProduct = (formProduct: nameValueForm) => {
     })
   }
 
-  const handleFileChange = (file: File | null, index: number) => {
+  const handleFileChange = (file: File | null) => {
     setImages((prev) => {
       const updatedImages = [...prev]
       if (file) {
-        if (index < updatedImages.length) {
-          updatedImages[index] = file
-        } else {
-          updatedImages.push(file)
-        }
-      } else if (index < updatedImages.length) {
-        updatedImages[index] = ''
+        updatedImages.push(file)
       }
       return updatedImages
     })

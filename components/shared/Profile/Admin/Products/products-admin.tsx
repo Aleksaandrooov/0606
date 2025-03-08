@@ -60,7 +60,7 @@ export const ProductsAdmin = ({
         clearCharact={() => setCharact([])}
         clearImage={() => setImages([])}
         images={images}
-        changeImages={(e, i) => handleFileChange(e, i)}
+        changeImages={(e) => handleFileChange(e)}
         form={form}
       />
       <div className="w-[340px]">
@@ -87,11 +87,7 @@ export const ProductsAdmin = ({
           {images.find((obj) => obj !== '') ? (
             <img
               className="h-[200px] object-cover mx-auto"
-              src={
-                !changeProduct
-                  ? URL.createObjectURL(images.find((obj) => obj !== '') as Blob)
-                  : '/' + String(images.find((obj) => obj))
-              }
+              src={URL.createObjectURL(images.find((obj) => obj !== '') as Blob)}
             />
           ) : (
             <div className="h-[200px] items-center justify-center flex">

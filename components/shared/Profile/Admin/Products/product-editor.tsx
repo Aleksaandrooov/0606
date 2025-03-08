@@ -16,7 +16,7 @@ import { useRouter } from 'next/navigation'
 
 interface Props {
   form: UseFormReturn<TFormProductEditor>
-  changeImages: (e: File | null, i: number) => void
+  changeImages: (e: File | null) => void
   images: (File | string)[]
   charact: charactInter[]
   changeCharact: (t: 'name' | 'type', e: string, i: number, id?: number) => void
@@ -64,7 +64,7 @@ export const ProductEditor: React.FC<Props> = ({
           router.refresh()
         })
       } else if (!('item' in data)) {
-        await editProduct(data, charact, changeProduct, sizes).then(() => {
+        await editProduct(data, charact, changeProduct, sizes, images as File[]).then(() => {
           clearCharact()
           formReset(form)
           clearImage()
@@ -75,6 +75,8 @@ export const ProductEditor: React.FC<Props> = ({
       }
     }
   }
+
+  console.log(images)
 
   return (
     <div className="flex-1 max-w-[600px] w-full">
@@ -101,17 +103,30 @@ export const ProductEditor: React.FC<Props> = ({
               itemsSearch={itemsSearch}
             />
           )}
-          {!changeProduct &&
-            [...Array(images.length + 1)]?.map((_, i) => (
-              <Input
-                key={i}
-                onChange={(e) => {
-                  const selectedFile = e.target.files?.[0] || null
-                  changeImages(selectedFile, i)
-                }}
-                type="file"
-              />
+          <div className="border p-3 rounded-md flex flex-col gap-3">
+            <div className="flex justify-between items-center">
+              <h1 className="text-sm">Фото</h1>
+              {images.length > 0 && (
+                <Button onClick={() => clearImage()} size="sm" variant="outline">
+                  Очистить
+                </Button>
+              )}
+            </div>
+            <Input
+              key={String(images)}
+              onChange={(e) => {
+                const selectedFile = e.target.files?.[0] || null
+                changeImages(selectedFile)
+              }}
+              type="file"
+            />
+            {images.map((obj, i) => (
+              <div key={i} className="flex gap-2 justify-between mx-2 items-center">
+                <h2>{(obj as File).name}</h2>
+                <img className="max-w-[50px] max-h-[50px]" src={URL.createObjectURL(obj as File)} />
+              </div>
             ))}
+          </div>
           {!formSelect && <FormInput name="article" label="Артикул (wb)" />}
           <div className="border p-3 rounded-md flex flex-col gap-3">
             <h1 className="text-sm">Габариты упаковки товара</h1>
@@ -158,6 +173,7 @@ export const ProductEditor: React.FC<Props> = ({
                     clearCharact()
                     isChangeProduct(undefined)
                     router.refresh()
+                    clearSize()
                     clearImage()
                   })
                 }}
