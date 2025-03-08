@@ -236,15 +236,15 @@ export const deleteProduct = async (id: number) => {
       return NextResponse.error()
     }
 
-    await prisma.size.deleteMany({
-      where: {
-        productId: id,
-      },
-    })
-
     await prisma.cartItem.deleteMany({
       where: {
         productItemId: id,
+      },
+    })
+
+    await prisma.size.deleteMany({
+      where: {
+        productId: id,
       },
     })
 
