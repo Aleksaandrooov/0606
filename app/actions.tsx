@@ -165,26 +165,25 @@ export async function deleteSettingProfile(email: string) {
 export async function createOrder(
   data: TFormPayment,
   delivery: deliveryInteface,
-  items: cartType['items'][],
+  cartItems: cartType['items'][],
   totalAmount: number,
   currency: currencyFormat,
   userId?: number,
 ) {
   try {
+    const items = cartItems.filter((obj) => obj.productSize.quntity)
     await Promise.all(
-      items
-        .filter((obj) => obj.productItem.quntity)
-        .map(async (obj) => {
-          const product = await prisma.product.findFirst({
-            where: {
-              id: obj.productItemId,
-            },
-          })
-          if (product!.quntity! < obj.quantity) {
-            throw new Error()
-          }
-          return obj
-        }),
+      items.map(async (obj) => {
+        const size = await prisma.size.findFirst({
+          where: {
+            id: obj.productSizeId,
+          },
+        })
+        if (size!.quntity < obj.quantity) {
+          throw new Error()
+        }
+        return obj
+      }),
     )
     const token = crypto.randomUUID()
     const order = await prisma.order.create({
@@ -239,11 +238,11 @@ export async function createOrder(
 
     await Promise.all(
       items
-        .filter((obj) => obj.productItem.quntity)
+        .filter((obj) => obj.productSize.quntity)
         .map(async (obj) => {
-          await prisma.product.update({
+          await prisma.size.update({
             where: {
-              id: obj.productItemId,
+              id: obj.productSizeId,
             },
             data: {
               quntity: {

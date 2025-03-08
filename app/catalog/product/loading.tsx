@@ -4,9 +4,9 @@ import { LoadingBreadcrumb } from '@/lib/Components/loading-breadcrumb'
 
 export default function Loading() {
   return (
-    <Container className="mt-5 max-sm:px-4">
+    <Container className="mt-5 max-sm:px-4 flex-grow flex flex-col justify-center">
       <LoadingBreadcrumb />
-      <div className="flex justify-around max-lg:flex-col items-center">
+      <div className="flex justify-around max-lg:flex-col items-center mb-20">
         <div className="">
           <div className="lg:min-h-[60vh] flex items-center">
             <Skeleton className="h-[450px] w-[450px] m-5" />

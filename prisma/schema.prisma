@@ -38,13 +38,23 @@ model Post {
     wbUrl      String?
 }
 
+model Size {
+    id      Int    @id @unique @default(autoincrement())
+    title   String
+    quntity Int
+
+    product   Product @relation(fields: [productId], references: [id])
+    productId Int
+
+    cartItem CartItem[]
+}
+
 model Product {
     id          Int      @id @unique @default(autoincrement())
     title       String
     image       String[]
     price       Int
     oldPrice    Int?
-    quntity     Int
     description String?
     article     String?
 
@@ -53,6 +63,7 @@ model Product {
     lenght Int
     weight Int
 
+    size            Size[]
     cartItem        CartItem[]
     characteristics Characteristics[]
 
@@ -98,9 +109,6 @@ model Cart {
 
     token String
 
-    totalAmount Int @default(0) // убрать
-    quantity    Int @default(0) // убрать
-
     createdAt DateTime @default(now())
     updateAt  DateTime @updatedAt
 
@@ -112,6 +120,9 @@ model CartItem {
 
     productItem   Product @relation(fields: [productItemId], references: [id])
     productItemId Int
+
+    productSize   Size @relation(fields: [productSizeId], references: [id])
+    productSizeId Int
 
     Cart   Cart @relation(fields: [cartId], references: [id])
     cartId Int

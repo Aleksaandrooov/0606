@@ -19,14 +19,12 @@ export const sendEmailVerificed = async ({
     },
   })
   try {
-    const info = await transporter.sendMail({
+    return await transporter.sendMail({
       from: 'shop@0606.store',
       to,
       subject,
       html,
     })
-    console.log(info)
-    return info
   } catch (error) {
     console.error('Error sending email:', error)
     throw new Error()

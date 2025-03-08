@@ -16,6 +16,7 @@ export default async function Page({ params }: PageProps) {
     },
     include: {
       characteristics: true,
+      size: true,
     },
   })
 
@@ -34,9 +35,9 @@ export default async function Page({ params }: PageProps) {
         <title>{metadata.title}</title>
         <meta name="description" content={metadata.description} />
       </Head>
-      <Container className="mt-5 max-sm:px-4">
+      <Container className="mt-5 max-sm:px-4 flex-grow flex flex-col">
         <BreadCrumb name={Product.title} pref="Каталог" url="/catalog" />
-        <div className="flex justify-around max-lg:flex-col items-center">
+        <div className="flex justify-around max-lg:flex-col items-center flex-1 mb-20">
           <ProductImages Images={Product.image} />
           <ProductTitle {...Product} />
         </div>

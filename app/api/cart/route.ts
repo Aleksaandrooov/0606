@@ -25,6 +25,7 @@ export async function GET(req: NextRequest) {
         items: {
           include: {
             productItem: true,
+            productSize: true,
           },
           orderBy: {
             createdAt: 'desc',
@@ -54,7 +55,17 @@ export async function POST(req: NextRequest) {
       token = session.user.cartToken
     }
 
-    const id = (await req.json()) as number
+    const { id, size } = (await req.json()) as { id: number; size: number }
+
+    const productSize = await prisma.size.findFirst({
+      where: {
+        id: size,
+      },
+    })
+
+    if (!productSize) {
+      return NextResponse.error()
+    }
 
     if (!token) {
       token = crypto.randomUUID()
@@ -77,6 +88,7 @@ export async function POST(req: NextRequest) {
       where: {
         productItemId: id,
         cartId: cart.id,
+        productSizeId: productSize.id,
       },
     })
 
@@ -92,6 +104,7 @@ export async function POST(req: NextRequest) {
           productItemId: id,
           cartId: cart.id,
           quantity: 1,
+          productSizeId: productSize.id,
         },
       })
     }
@@ -104,6 +117,7 @@ export async function POST(req: NextRequest) {
         items: {
           include: {
             productItem: true,
+            productSize: true,
           },
           orderBy: {
             createdAt: 'desc',
@@ -149,6 +163,7 @@ export async function PATCH(req: NextRequest) {
     const cartItem = await prisma.cartItem.findFirst({
       where: {
         productItemId: data.id,
+        productSizeId: data.size,
         cartId: cart!.id,
       },
     })
@@ -162,6 +177,7 @@ export async function PATCH(req: NextRequest) {
       await prisma.cartItem.update({
         where: {
           id: cartItem.id,
+          productSizeId: data.size,
         },
         data: {
           quantity: {
@@ -173,6 +189,7 @@ export async function PATCH(req: NextRequest) {
       await prisma.cartItem.update({
         where: {
           id: cartItem.id,
+          productSizeId: data.size,
         },
         data: {
           quantity: {
@@ -190,6 +207,7 @@ export async function PATCH(req: NextRequest) {
         items: {
           include: {
             productItem: true,
+            productSize: true,
           },
           orderBy: {
             createdAt: 'desc',

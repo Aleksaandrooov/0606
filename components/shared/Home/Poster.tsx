@@ -27,7 +27,7 @@ export const Poster = ({ posts }: { posts: Post[] }) => {
         disableOnInteraction: false,
       }}
       modules={[Pagination, Autoplay]}
-      className="mySwiper1 w-full"
+      className="mySwiper1 w-full my-auto"
     >
       {posts.map((obj) => (
         <SwiperSlide key={obj.id} className="my-auto px-2">
@@ -64,10 +64,10 @@ export const Poster = ({ posts }: { posts: Post[] }) => {
                 )}
               </div>
             </div>
-            <Link href={obj.buttonUrl || obj.wbUrl || ''}>
+            <Link href={obj.buttonUrl || obj.wbUrl || ''} className="py-5">
               <img
                 className="max-h-[600px] my-auto max-xl:max-h-[500px] max-lg:max-h-[400px] max-md:max-h-[300px] max-md:max-w-[250px] max-sm:max-w-[200px] max-sm:max-h-[250px]"
-                src={'https://0606.store/' + obj.img}
+                src={'/' + obj.img}
               />
             </Link>
           </div>

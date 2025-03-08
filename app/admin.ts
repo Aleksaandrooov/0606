@@ -1,9 +1,9 @@
 'use server'
 import { TFormPostAdd, TFormProductEditor, TFormProductEditorDefault } from '@/lib/formInpit/schema'
+import { charactInter, fetchCreateProductInter, sizesInter } from '@/components/shared/Profile/dto'
 import { prisma } from '@/prisma/prisma-client'
 import { Status } from '@prisma/client'
 import { NextResponse } from 'next/server'
-import { charactInter, fetchCreateProductInter, sizesInter } from '@/components/shared/Profile/dto'
 import fs from 'fs'
 import path from 'path'
 import axios from 'axios'
@@ -47,9 +47,7 @@ export const createProduct = async (
   images: File[],
 ) => {
   try {
-    const { description, title, price, quntity, article, oldPrice, weight, height, length, width } =
-      data
-    const sizes = sizesArray.filter((obj) => obj.price && obj.techSize && obj.wbSize)
+    const { description, title, price, article, oldPrice, weight, height, length, width } = data
     const characteristics = charact
       .filter((obj) => obj.id && obj.type)
       .map((obj) => {
@@ -59,6 +57,7 @@ export const createProduct = async (
       })
 
     if ('item' in data) {
+      const sizes = sizesArray.filter((obj) => obj.price && obj.techSize && obj.wbSize)
       const { brand, description, length, width, height } = data
 
       const product: fetchCreateProductInter = {
@@ -86,6 +85,7 @@ export const createProduct = async (
           return NextResponse.error()
         })
     }
+    const sizes = sizesArray.filter((obj) => obj.techSize && obj.quntity) // получаем размеры
     const savedFiles = []
 
     for (const item of images) {
@@ -104,7 +104,6 @@ export const createProduct = async (
         oldPrice: oldPrice ? Number(oldPrice) : undefined,
         price: Number(price),
         description,
-        quntity: Number(quntity),
         image: savedFiles,
         article,
         width: Number(width),
@@ -113,6 +112,18 @@ export const createProduct = async (
         lenght: Number(length),
       },
     })
+
+    await Promise.all(
+      sizes.map(async (obj) => {
+        await prisma.size.create({
+          data: {
+            title: obj.techSize,
+            quntity: obj.quntity!,
+            productId: productCreate.id,
+          },
+        })
+      }),
+    )
 
     await Promise.all(
       charact
@@ -137,10 +148,11 @@ export const editProduct = async (
   data: TFormProductEditorDefault,
   charact: charactInter[],
   id: number,
+  sizesArray: sizesInter[],
 ) => {
   try {
-    const { title, quntity, price, description, article, oldPrice, weight, height, length, width } =
-      data
+    const sizes = sizesArray.filter((obj) => obj.techSize && obj.quntity)
+    const { title, price, description, article, oldPrice, weight, height, length, width } = data
     const product = await prisma.product.findFirst({
       where: {
         id,
@@ -158,7 +170,6 @@ export const editProduct = async (
       },
       data: {
         title,
-        quntity: Number(quntity),
         oldPrice: oldPrice ? Number(oldPrice) : undefined,
         price: Number(price),
         article,
@@ -169,6 +180,25 @@ export const editProduct = async (
         weight: Number(weight),
       },
     })
+
+    await prisma.size.deleteMany({
+      where: {
+        productId: product.id,
+      },
+    })
+
+    await Promise.all(
+      sizes.map(
+        async (obj) =>
+          await prisma.size.create({
+            data: {
+              title: obj.techSize,
+              quntity: obj.quntity!,
+              productId: product.id,
+            },
+          }),
+      ),
+    )
 
     await prisma.characteristics.deleteMany({
       where: {
@@ -205,6 +235,12 @@ export const deleteProduct = async (id: number) => {
       console.log('Ошибка удаление')
       return NextResponse.error()
     }
+
+    await prisma.size.deleteMany({
+      where: {
+        productId: id,
+      },
+    })
 
     await prisma.cartItem.deleteMany({
       where: {

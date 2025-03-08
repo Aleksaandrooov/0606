@@ -36,9 +36,9 @@ export async function POST(req: NextRequest) {
       const items = Object.values(order.items as string) as unknown as cartType['items'][]
       await Promise.all(
         items.map(async (obj) => {
-          await prisma.product.updateMany({
+          await prisma.size.update({
             where: {
-              id: obj.productItemId,
+              id: obj.productSizeId,
             },
             data: {
               quntity: {

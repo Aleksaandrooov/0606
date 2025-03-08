@@ -4,23 +4,24 @@ import React from 'react'
 import { ProductCurrency } from '../Product/product-currency'
 import { AddProductButton } from '@/lib/Components/add-product-button'
 import { cn } from '@/lib/utils'
+import { Size } from '@prisma/client'
 
 interface Props {
   id: number
   price: number
-  count: number
   className?: string
   description: string | null
+  selectSize: Size | null
   Characteristics: { name: string; type: string }[]
 }
 
 export const ModalProductDescription = ({
   id,
   price,
-  count,
   className,
   Characteristics,
   description,
+  selectSize,
 }: Props) => {
   return (
     <div className="mt-1 mb-2">
@@ -56,7 +57,13 @@ export const ModalProductDescription = ({
             </div>
           )}
           <div className="flex justify-between mt-auto sticky bottom-0 pb-4 pt-2 rounded-t-sm bg-zinc-950">
-            <AddProductButton count={count} id={id} className="w-[220px] max-sm:w-[164px] h-9" />
+            <AddProductButton
+              size={selectSize?.id || 0}
+              count={selectSize?.quntity || 0}
+              disabled={!selectSize}
+              id={id}
+              className="w-[220px] max-sm:w-[164px] h-9"
+            />
             <ProductCurrency oldPrice={null} price={price} />
           </div>
         </SheetContent>

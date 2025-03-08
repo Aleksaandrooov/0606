@@ -35,7 +35,7 @@ export const PayCart = ({
   const deliveryPrice = delivery?.delivery_sum ? Number(delivery?.delivery_sum) : 0
   const oldPrice = items.reduce((sum, acc) => {
     return acc.productItem.oldPrice
-      ? sum + acc.productItem.quntity > 0
+      ? sum + acc.productSize.quntity > 0
         ? acc.productItem.oldPrice * acc.quantity
         : 0
       : sum + 0
@@ -45,16 +45,15 @@ export const PayCart = ({
     <div className="w-[350px] shrink-0 max-xl:mb-10 max-md:w-full flex flex-col gap-3 max-xl:mx-auto max-xl:w-[400px]">
       <div className="rounded-xl bg-accent/50 px-4 py-2">
         {items
-          .filter((obj) => obj.productItem.quntity)
+          .filter((obj) => obj.productSize.quntity)
           .map((obj) => (
             <div key={obj.id} className="h-[60px] flex gap-2 items-center">
               <div className="max-w-[60px] mr-1">
-                <img
-                  className="max-h-[50px]"
-                  src={'https://0606.store/' + obj.productItem.image[0]}
-                />
+                <img className="max-h-[50px]" src={'/' + obj.productItem.image[0]} />
               </div>
-              <h2 className="text-xs line-clamp-3 flex-1">{obj.productItem.title}</h2>
+              <h2 className="text-xs line-clamp-3 flex-1">
+                {obj.productItem.title} &quot;{obj.productSize.title}&quot;
+              </h2>
               <div className="text-end flex items-center gap-1">
                 <CurrencyToPrice
                   className="text-sm text-nowrap"

@@ -30,8 +30,10 @@ export const OrderProducts: React.FC<Props> = ({ items: jsonItems, currency: typ
       </div>
       {items?.map((obj) => (
         <div key={obj.id} className="grid grid-cols-6 text-sm gap-2">
-          <img className="max-h-[80px]" src={'https://0606.store/' + obj.productItem?.image[0]} />
-          <h1 className="my-auto col-span-3 max-md:text-xs">{obj.productItem?.title}</h1>
+          <img className="max-h-[80px]" src={'/' + obj.productItem?.image[0]} />
+          <h1 className="my-auto col-span-3 max-md:text-xs">
+            {obj.productItem?.title} &quot;{obj.productSize.title}&quot;
+          </h1>
           <h1 className="my-auto">x {obj.quantity}</h1>
           <h1 className="my-auto">
             {numberReplace(priceToFormat(obj.productItem.price) * obj.quantity)}{' '}

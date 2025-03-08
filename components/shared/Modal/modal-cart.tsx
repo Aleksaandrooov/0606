@@ -25,9 +25,9 @@ export const ModalCart = () => {
   const [disabled, isDisabled] = useState(false)
   const { data: session } = useSession()
 
-  const deleteItem = (id: number) => {
+  const deleteItem = (id: number, size: number) => {
     isDisabled(true)
-    postCart(id).then(() => isDisabled(false))
+    postCart(id, size).then(() => isDisabled(false))
   }
 
   return (
@@ -56,7 +56,7 @@ export const ModalCart = () => {
               currency={currency}
               currencyValue={currencyValue}
               disabled={disabled}
-              deleteItem={(n) => deleteItem(n)}
+              deleteItem={(n, s) => deleteItem(n, s)}
             />
           ))}
         </div>

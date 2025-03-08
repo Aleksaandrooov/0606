@@ -20,7 +20,7 @@ export const ProductBottom = ({ article }: { article: string | null }) => {
     isLoading(true)
     try {
       async function fetch() {
-        const data = await Api.orders.OrdersFetch(Number(article) + 2)
+        const data = await Api.orders.OrdersFetch(Number(article))
         setOrders(data)
         isLoading(false)
       }

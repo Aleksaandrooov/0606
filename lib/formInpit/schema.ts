@@ -77,7 +77,6 @@ export const productEditorSchema = z.object({
     .string()
     .min(1000, { message: 'Минимум 1000 символов' })
     .max(5000, { message: 'Максимум 5000 символов' }),
-  quntity: z.string().min(1, { message: 'Заполните поле' }),
   length: z.string().min(1, { message: 'Заполните поле' }),
   width: z.string().min(1, { message: 'Заполните поле' }),
   height: z.string().min(1, { message: 'Заполните поле' }),
@@ -88,7 +87,6 @@ export const productEditorDefaultSchema = z.object({
   title: z.string().min(1, { message: 'Заполните поле' }),
   price: z.string().min(1, { message: 'Заполните поле' }),
   oldPrice: z.string().optional(),
-  quntity: z.string().min(1, { message: 'Заполните поле' }),
   description: z.string().optional(),
   article: z.string().optional(),
   length: z.string().min(1, { message: 'Заполните поле' }),

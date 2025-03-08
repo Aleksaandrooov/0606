@@ -20,12 +20,15 @@ interface Props {
   images: (File | string)[]
   charact: charactInter[]
   changeCharact: (t: 'name' | 'type', e: string, i: number, id?: number) => void
+  changeSize: (t: sizeType, s: string, i: number) => void
   clearCharact: () => void
   clearImage: () => void
   changeForm: (s: nameValueForm) => void
   valueForm: nameValueForm
   isChangeProduct: (t: number | undefined) => void
   changeProduct: number | undefined
+  sizes: sizesInter[]
+  clearSize: () => void
 }
 
 export const ProductEditor: React.FC<Props> = ({
@@ -33,6 +36,7 @@ export const ProductEditor: React.FC<Props> = ({
   isChangeProduct,
   changeImages,
   images,
+  sizes,
   charact,
   changeCharact,
   clearCharact,
@@ -40,30 +44,14 @@ export const ProductEditor: React.FC<Props> = ({
   valueForm,
   changeProduct,
   clearImage,
+  changeSize,
+  clearSize,
 }) => {
-  const [sizes, setSizes] = useState<sizesInter[]>([])
-  const itemsSearch = form.getValues('item')
   const [focus, setFocus] = useState(false)
-  const { characs, items } = ProductFetch(focus, itemsSearch, clearCharact)
+  const itemsSearch = form.getValues('item')
   const formSelect = valueForm === 'wb'
+  const { characs, items } = ProductFetch(focus, itemsSearch, clearCharact, formSelect)
   const router = useRouter()
-
-  const changeSize = (t: sizeType, s: string, i: number) => {
-    setSizes((prev) => {
-      const updateCharact = [...prev]
-      if (!updateCharact[i]) {
-        updateCharact.push({ techSize: '', wbSize: '', price: 0 })
-      }
-
-      if (t === 'price') {
-        updateCharact[i][t] = Number(s)
-      } else {
-        updateCharact[i][t] = s
-      }
-
-      return updateCharact
-    })
-  }
 
   const onSubmit = async (data: TFormProductEditor | TFormProductEditorDefault) => {
     if (formSelect ? characs.data.find((obj) => obj)?.subjectName === itemsSearch : true) {
@@ -71,15 +59,16 @@ export const ProductEditor: React.FC<Props> = ({
         await createProduct(data, sizes, charact, images as File[]).then(() => {
           clearCharact()
           clearImage()
-          setSizes([])
+          clearSize()
           formReset(form)
           router.refresh()
         })
       } else if (!('item' in data)) {
-        await editProduct(data, charact, changeProduct).then(() => {
+        await editProduct(data, charact, changeProduct, sizes).then(() => {
           clearCharact()
           formReset(form)
           clearImage()
+          clearSize()
           isChangeProduct(undefined)
           router.refresh()
         })
@@ -131,17 +120,20 @@ export const ProductEditor: React.FC<Props> = ({
             <FormInput name="height" label="Высота, см" />
             <FormInput name="weight" label="Вес, кг" />
           </div>
-          {formSelect && (
-            <div className="border p-3 rounded-md flex flex-col gap-3">
-              <h1 className="text-sm">Размеры товара</h1>
-              {[...Array(sizes.length + 1)]?.map((_, i) => (
-                <ProductSizesArray changeSize={(t, s, i) => changeSize(t, s, i)} key={i} i={i} />
-              ))}
-            </div>
-          )}
+          <div className="border p-3 rounded-md flex flex-col gap-3">
+            <h1 className="text-sm">Размеры товара</h1>
+            {sizes?.map((_, i) => (
+              <ProductSizesArray
+                formSelect={formSelect}
+                size={sizes.find((_, index) => i === index)}
+                changeSize={(t, s, i) => changeSize(t, s, i)}
+                key={i}
+                i={i}
+              />
+            ))}
+          </div>
           <FormInput name="oldPrice" label="Цена без скидки (для сайта)" />
           <FormInput name="price" label="Цена (для сайта)" />
-          <FormInput name="quntity" label="Количество" />
           {[...Array(charact.length + 1)]?.map((_, i) => (
             <ProductsCharact
               formSelect={formSelect}

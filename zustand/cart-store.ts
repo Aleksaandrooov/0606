@@ -10,7 +10,7 @@ interface State {
 }
 interface Action {
   fetchCart: () => Promise<unknown>
-  postCart: (id: number) => Promise<unknown>
+  postCart: (id: number, size: number) => Promise<unknown>
   patchCart: ({ type, id }: patchCartType) => Promise<unknown>
   changeTotalAmount: () => void
 }
@@ -24,10 +24,15 @@ export const cartStore = create<State & Action>((set) => ({
   changeTotalAmount: () =>
     set((state) => ({
       totalPrice: state.cartItem.reduce((sum, curr) => {
-        return sum + curr.productItem.quntity > 0 ? curr.quantity * curr.productItem.price : 0
+        return (
+          sum +
+          (curr.productSize.quntity > 0
+            ? curr.quantity * Math.round(curr.productItem.price / 10) * 10
+            : 0)
+        )
       }, 0),
       totalQuntity: state.cartItem.reduce((sum, curr) => {
-        return sum + curr.productItem.quntity > 0 ? curr.quantity : 0
+        return sum + (curr.productSize.quntity > 0 ? curr.quantity : 0)
       }, 0),
     })),
 
@@ -40,16 +45,16 @@ export const cartStore = create<State & Action>((set) => ({
     })
     cartStore.getState().changeTotalAmount()
   },
-  postCart: async (id) => {
-    const data = await Api.cart.postCart(id)
+  postCart: async (id, size) => {
+    const data = await Api.cart.postCart(id, size)
     const items = Array.isArray(data.items) ? data.items : []
     set({
       cartItem: items,
     })
     cartStore.getState().changeTotalAmount()
   },
-  patchCart: async ({ type, id }) => {
-    const data = await Api.cart.updateCart({ type, id })
+  patchCart: async ({ type, id, size }) => {
+    const data = await Api.cart.updateCart({ type, id, size })
     const items = Array.isArray(data.items) ? data.items : []
     set({
       cartItem: items,

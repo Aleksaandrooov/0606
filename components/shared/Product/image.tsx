@@ -18,7 +18,7 @@ export const Image: React.FC<Props> = ({ url, index, i }) => {
     >
       <img
         className={cn('sm:max-h-[500px] sm:max-w-[600px] max-sm:px-5', index == i ? '' : 'hidden')}
-        src={'https://0606.store/' + url}
+        src={'/' + url}
         alt={url}
       />
     </div>

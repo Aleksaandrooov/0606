@@ -13,7 +13,7 @@ export const ProductImages: React.FC<Props> = ({ Images }) => {
 
   return (
     <div className="">
-      <div className="lg:min-h-[60vh] my-2 flex items-center">
+      <div className="lg:min-h-[60vh] my-4 flex items-center">
         {Images.map((obj, i) => (
           <Image url={obj} key={i} i={i + 1} index={index} />
         ))}

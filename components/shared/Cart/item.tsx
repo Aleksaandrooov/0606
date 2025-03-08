@@ -14,12 +14,13 @@ type Props = cartType['items'] & {
     RUB: number
   }
   currencyValue: currencyFormat
-  deleteCart: (id: number) => Promise<unknown>
+  deleteCart: (id: number, size: number) => Promise<unknown>
   updateCart: ({ type, id }: patchCartType) => Promise<unknown>
 }
 
 export const Item = ({
   productItem,
+  productSize,
   currency,
   quantity,
   currencyValue,
@@ -33,26 +34,31 @@ export const Item = ({
 
   const deleteItem = () => {
     isDisabled(true)
-    deleteCart(productItem.id).then(() => {
+    deleteCart(productItem.id, productSize.id).then(() => {
       isDisabled(false)
     })
   }
 
   const updateItem = (type: patchCartType['type']) => {
     isDisabled(true)
-    updateCart({ type, id: productItem.id }).then(() => isDisabled(false))
+    updateCart({ type, id: productItem.id, size: productSize.id }).then(() => isDisabled(false))
   }
 
   return (
-    <div className="h-[100px] flex gap-5 max-sm:gap-2 items-center relative">
+    <div className="h-[100px] flex gap-5 max-sm:gap-2 items-center relative border-b last:border-b-0">
       <div className="w-[80px] max-md:w-[60px]">
-        <img className="h-full w-full" src={'https://0606.store/' + productItem.image[0]} />
+        <img className="h-full w-full" src={'/' + productItem.image[0]} />
       </div>
-      <Link href={'/catalog/product/' + productItem.id} className="my-auto flex-1">
-        <h1 className="max-sm:text-sm">{productItem.title}</h1>
+      <Link
+        href={'/catalog/product/' + productItem.id + '?size=' + productSize.id}
+        className="my-auto flex-1"
+      >
+        <h1 className="max-sm:text-sm">
+          {productItem.title} &quot;{productSize.title}&quot;
+        </h1>
         <span className="text-neutral-400 text-sm max-sm:text-xs">Перейти к товару</span>
       </Link>
-      {productItem.quntity ? (
+      {productSize.quntity ? (
         <div className="md:flex-1 max-sm:absolute right-10 -bottom-2 justify-center items-center flex gap-3">
           <Button
             onClick={() => updateItem('decrement')}
@@ -66,7 +72,7 @@ export const Item = ({
           <h1>{quantity}</h1>
           <Button
             onClick={() => updateItem('increment')}
-            disabled={disabled || productItem.quntity <= quantity}
+            disabled={disabled || productSize.quntity <= quantity}
             variant="outline"
             size="sm"
             className="h-7 w-7"
@@ -78,7 +84,7 @@ export const Item = ({
         <></>
       )}
       <div className="flex items-center justify-between gap-5 max-sm:gap-2">
-        {productItem.quntity ? (
+        {productSize.quntity ? (
           <div className="text-end">
             <h1>
               {numberReplace(priceToFormat * quantity)} {format}

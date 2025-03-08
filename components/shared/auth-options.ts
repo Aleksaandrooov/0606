@@ -54,7 +54,9 @@ export const authOptions: AuthOptions = {
         if (!findCode) {
           return null
         }
+
         if (token) {
+          console.log(2)
           const cart = await prisma.cart.findFirst({
             where: {
               token,
@@ -64,18 +66,19 @@ export const authOptions: AuthOptions = {
           if (cart) {
             await prisma.cartItem.deleteMany({
               where: {
-                cartId: cart?.id,
+                cartId: cart.id,
               },
             })
 
             await prisma.cart.delete({
               where: {
-                id: cart?.id,
+                id: cart.id,
               },
             })
           }
           cookie.delete('cartToken')
         }
+
         await prisma.user.update({
           where: {
             id: findUser.id,

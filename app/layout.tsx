@@ -26,10 +26,10 @@ export default function RootLayout({
 }>) {
   return (
     <html className="dark" lang="en">
-      <body className={cn('min-h-screen flex flex-col scroll__hidden', nunito.className)}>
+      <body className={cn('flex flex-col scroll__hidden', nunito.className)}>
         <Providers>
           <Header />
-          <main className="flex-1 flex flex-col">{children}</main>
+          <main className="flex-1 min-h-screen flex flex-col">{children}</main>
           <Footer />
           <FooterMobile />
         </Providers>

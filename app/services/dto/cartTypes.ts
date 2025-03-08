@@ -1,8 +1,9 @@
-import { Cart, CartItem, Product } from '@prisma/client';
+import { Cart, CartItem, Product, Size } from '@prisma/client'
 
-export type patchCartType = { type: 'increment' | 'decrement'; id: number };
+export type patchCartType = { type: 'increment' | 'decrement'; id: number; size: number }
 export type cartType = Cart & {
   items: CartItem & {
-    productItem: Product;
-  };
-};
+    productItem: Product
+    productSize: Size
+  }
+}

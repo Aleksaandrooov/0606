@@ -12,7 +12,6 @@ export const formReset = (form: UseFormReturn<TFormProductEditor>) => {
     width: '',
     height: '',
     price: '',
-    quntity: '',
     description: '',
     article: '',
   })
