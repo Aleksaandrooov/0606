@@ -34,7 +34,7 @@ export const Items = () => {
       {itemHome.map((obj, i) => (
         <div
           key={i}
-          className="rounded-xl my-5 max-lg:my-0 border text-center py-5 max-sm:py-3 px-2 flex flex-col"
+          className="rounded-xl my-5 mb-14 max-lg:my-0 border text-center py-5 max-sm:py-3 px-2 flex flex-col"
         >
           <h1 className="text-xl mb-2 max-md:text-base">{obj.name}</h1>
           <span className="text-sm text-neutral-400 flex-1 max-md:text-xs">{obj.span}</span>

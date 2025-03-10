@@ -66,8 +66,8 @@ export const Poster = ({ posts }: { posts: Post[] }) => {
             </div>
             <Link href={obj.buttonUrl || obj.wbUrl || ''} className="py-5">
               <img
-                className="max-h-[450px] my-auto max-lg:max-h-[400px] max-md:max-h-[300px] max-md:max-w-[250px] max-sm:max-w-[200px] max-sm:max-h-[250px]"
-                src={'https://0606.store/' + obj.img}
+                className="max-h-[500px] my-auto max-lg:max-h-[400px] max-md:max-h-[300px] max-md:max-w-[250px] max-sm:max-w-[200px] max-sm:max-h-[250px]"
+                src={'/' + obj.img}
               />
             </Link>
           </div>
