@@ -4,7 +4,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 export default function Loading() {
   return (
     <div className="flex grow flex-col mx-2">
-      <div className="flex justify-around items-center gap-5 pb-5">
+      <div className="flex justify-around items-center gap-5 pb-5 my-auto">
         <div className="max-w-[400px] max-sm:max-w-[380px]">
           <Skeleton className="h-9 w-72 max-md:h-7 max-md:w-48 mb-1 max-sm:h-5 max-sm:w-full" />
           <Skeleton className="h-5 max-md:h-4 max-md:w-32 w-40 max-sm:w-full" />
@@ -13,7 +13,7 @@ export default function Loading() {
             <Skeleton className="w-9" />
           </div>
         </div>
-        <Skeleton className="h-[500px] w-[560px] max-xl:h-[450px] max-lg:w-[400px] max-lg:h-[400px] max-md:h-[300px] max-md:w-[300px] max-sm:w-[200px] max-sm:h-[220px]" />
+        <Skeleton className="h-[450px] w-[560px] max-lg:w-[400px] max-lg:h-[400px] max-md:h-[300px] max-md:w-[300px] max-sm:w-[200px] max-sm:h-[220px]" />
       </div>
       <div className="flex justify-center gap-2 items-center">
         {[...Array(3)].map((_, i) => (

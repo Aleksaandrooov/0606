@@ -33,11 +33,11 @@ export const CdekMap: React.FC<Props> = ({ onChange, cartItem }) => {
         //@ts-ignore
         new CDEKWidget({
           from: {
-            country_code: 'RU',
-            city: 'Новосибирск',
-            postal_code: '630009',
-            code: 270,
-            address: 'ул. Большевистская, д. 101',
+            country_code: 'BY',
+            city: 'Минск',
+            postal_code: '220114',
+            code: 170,
+            address: 'ул. Кирилла Туровского, д. 18',
           },
           servicePath: 'https://0606.store/api/cdek',
           defaultLocation: [37.6173, 55.7558],
