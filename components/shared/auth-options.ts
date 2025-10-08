@@ -56,7 +56,6 @@ export const authOptions: AuthOptions = {
         }
 
         if (token) {
-          console.log(2)
           const cart = await prisma.cart.findFirst({
             where: {
               token,

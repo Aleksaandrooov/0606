@@ -36,7 +36,7 @@ export const CdekMap: React.FC<Props> = ({ onChange, cartItem }) => {
             country_code: 'BY',
             city: 'Минск',
             postal_code: '220114',
-            code: 170,
+            code: 9220,
             address: 'ул. Кирилла Туровского, д. 18',
           },
           servicePath: 'https://0606.store/api/cdek',
@@ -52,7 +52,6 @@ export const CdekMap: React.FC<Props> = ({ onChange, cartItem }) => {
             },
           ],
           currency: 'RUB',
-          debug: true,
           root: 'cdek-map',
           onChoose: (typeOf, tarif, office) => {
             const name = 'address' in office ? office.address : office.name

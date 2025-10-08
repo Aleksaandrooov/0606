@@ -9,6 +9,8 @@ export const ChangeProduct = (formProduct: nameValueForm) => {
   const [charact, setCharact] = useState<charactInter[]>([])
   const [sizes, setSizes] = useState<sizesInter[]>([defaultSizes])
 
+  console.log(sizes)
+
   const changeSize = (t: sizeType, s: string, i: number) => {
     setSizes((prev) => {
       const updateCharact = [...prev]
@@ -17,7 +19,7 @@ export const ChangeProduct = (formProduct: nameValueForm) => {
       }
 
       if (t === 'price' || t === 'quntity') {
-        updateCharact[i][t] = Number(s)
+        updateCharact[i][t] = s
       } else {
         updateCharact[i][t] = s
       }

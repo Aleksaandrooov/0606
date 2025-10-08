@@ -21,7 +21,7 @@ export default async function Products() {
 
   return (
     <Container>
-      <ProfileHeaderNavigationBar id={4} />
+      <ProfileHeaderNavigationBar id={4} role={user?.role} />
       <ProductsAdmin product={product} />
     </Container>
   )

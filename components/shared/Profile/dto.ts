@@ -8,8 +8,8 @@ export interface charactInter {
 export interface sizesInter {
   techSize: string
   wbSize: string
-  price?: number
-  quntity?: number
+  price?: string
+  quntity?: string
 }
 
 export interface fetchCreateProductInter {
@@ -23,6 +23,7 @@ export interface fetchCreateProductInter {
       length: number
       width: number
       height: number
+      weightBrutto: number
     }
     characteristics: {
       id: number

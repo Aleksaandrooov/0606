@@ -16,7 +16,7 @@ export default async function Posts() {
 
   return (
     <Container>
-      <ProfileHeaderNavigationBar id={5} />
+      <ProfileHeaderNavigationBar id={5} role={user.role} />
       <div className="my-6">
         <PostsClient posts={posts} />
       </div>

@@ -20,7 +20,7 @@ export default async function Page() {
 
   return (
     <Container>
-      <ProfileHeaderNavigationBar id={3} />
+      <ProfileHeaderNavigationBar id={3} role={user?.role} />
       <OrderAdmin Orders={orders} />
     </Container>
   )

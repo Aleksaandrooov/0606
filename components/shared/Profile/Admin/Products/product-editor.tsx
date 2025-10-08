@@ -76,8 +76,6 @@ export const ProductEditor: React.FC<Props> = ({
     }
   }
 
-  console.log(images)
-
   return (
     <div className="flex-1 max-w-[600px] w-full">
       <div className="flex justify-between items-center">
@@ -133,7 +131,7 @@ export const ProductEditor: React.FC<Props> = ({
             <FormInput name="length" label="Длина, см" />
             <FormInput name="width" label="Ширина, см" />
             <FormInput name="height" label="Высота, см" />
-            <FormInput name="weight" label="Вес, кг" />
+            <FormInput name="weight" label="Вес, гр" />
           </div>
           <div className="border p-3 rounded-md flex flex-col gap-3">
             <h1 className="text-sm">Размеры товара</h1>

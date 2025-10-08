@@ -1,4 +1,5 @@
-import { Button } from '@/components/ui/button';
+import { Api } from '@/app/services/ApiClient'
+import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,18 +8,27 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { navigationMenuProfile } from '@/lib/Array/profile-navigation-menu';
-import { singOut } from '@/lib/signOut';
-import { UserRole } from '@prisma/client';
-import { LogOut, UserRound } from 'lucide-react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import React from 'react';
+} from '@/components/ui/dropdown-menu'
+import { navigationMenuProfile } from '@/lib/Array/profile-navigation-menu'
+import { singOut } from '@/lib/signOut'
+import { UserRole } from '@prisma/client'
+import { LogOut, UserRound } from 'lucide-react'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import React, { useEffect, useState } from 'react'
 
-export const ProfileHeader = ({ role }: { role: UserRole }) => {
-  const path = usePathname();
-  const callback = path.includes('profile') ? '/' : undefined;
+export const ProfileHeader = () => {
+  const [role, setRole] = useState<UserRole | undefined>(undefined)
+  const path = usePathname()
+  const callback = path.includes('profile') ? '/' : undefined
+
+  useEffect(() => {
+    async function fetchRole() {
+      const role = await Api.me.fetchAuthMe()
+      setRole(role.role)
+    }
+    fetchRole()
+  }, [])
 
   return (
     <DropdownMenu>
@@ -47,5 +57,5 @@ export const ProfileHeader = ({ role }: { role: UserRole }) => {
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
-  );
-};
+  )
+}

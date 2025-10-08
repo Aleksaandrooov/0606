@@ -19,9 +19,6 @@ export async function createPayment(details: Props) {
       },
       capture: true,
       description: details.description,
-      metadata: {
-        order_id: details.orderId,
-      },
       confirmation: {
         type: 'redirect',
         return_url: process.env.YOOKASSA_CALLBACK_URL,

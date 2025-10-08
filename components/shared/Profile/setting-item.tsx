@@ -1,28 +1,28 @@
-import { FormInput } from '@/lib/formInpit/formInput';
+import { FormInput } from '@/lib/formInpit/formInput'
 import {
   TFromSettingName,
   TFromSettingNumber,
   TFromSettingPatronymic,
   TFromSettingSurname,
-} from '@/lib/formInpit/schema';
-import { zodResolver } from '@hookform/resolvers/zod';
-import React, { useEffect, useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
-import { ZodType } from 'zod';
-import { settingProfile } from '@/app/actions';
-import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
-import { nameType } from './dto';
+} from '@/lib/formInpit/schema'
+import { zodResolver } from '@hookform/resolvers/zod'
+import React, { useEffect, useState } from 'react'
+import { FormProvider, useForm } from 'react-hook-form'
+import { ZodType } from 'zod'
+import { settingProfile } from '@/app/actions'
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
+import { nameType } from './dto'
 
 interface Props {
-  label: string;
-  name: nameType;
+  label: string
+  name: nameType
   type: ZodType<
     TFromSettingName | TFromSettingNumber | TFromSettingPatronymic | TFromSettingSurname
-  >;
-  defaultValue: string;
-  email: string;
-  clear: boolean;
-  router: AppRouterInstance;
+  >
+  defaultValue: string
+  email: string
+  clear: boolean
+  router: AppRouterInstance
 }
 
 export const SettingItem: React.FC<Props> = ({
@@ -34,7 +34,7 @@ export const SettingItem: React.FC<Props> = ({
   email,
   router,
 }) => {
-  const [disabled, isDisabled] = useState(false);
+  const [disabled, isDisabled] = useState(false)
   const form = useForm({
     resolver: zodResolver(type),
     defaultValues: {
@@ -43,31 +43,31 @@ export const SettingItem: React.FC<Props> = ({
       patronymic: defaultValue || '',
       number: defaultValue || '',
     },
-  });
+  })
 
   const onSubmit = (data: {
-    name: string;
-    surname: string;
-    patronymic: string;
-    number: string;
+    name: string
+    surname: string
+    patronymic: string
+    number: string
   }) => {
     if (defaultValue !== data[name]) {
-      isDisabled(true);
-      settingProfile(name, data[name], email).then(() => isDisabled(false));
-      router.refresh();
+      isDisabled(true)
+      settingProfile(name, data[name], email).then(() => isDisabled(false))
+      router.refresh()
     }
-  };
+  }
 
   const onSubmitPrevent = () => {
-    event?.preventDefault();
-    (document.activeElement as HTMLElement).blur();
-  };
+    event?.preventDefault()
+    ;(document.activeElement as HTMLElement).blur()
+  }
 
   useEffect(() => {
     if (clear) {
-      form.reset({ name: '', surname: '', patronymic: '', number: '' });
+      form.reset({ name: '', surname: '', patronymic: '', number: '' })
     }
-  }, [clear]);
+  }, [clear])
 
   return (
     <FormProvider {...form}>
@@ -81,5 +81,5 @@ export const SettingItem: React.FC<Props> = ({
         />
       </form>
     </FormProvider>
-  );
-};
+  )
+}

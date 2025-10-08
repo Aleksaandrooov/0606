@@ -60,7 +60,7 @@ export const ProductSelectEditor: React.FC<Props> = ({
         item.size.map((obj) => {
           return {
             techSize: obj.title,
-            quntity: obj.quntity,
+            quntity: String(obj.quntity),
             wbSize: '',
           }
         }),

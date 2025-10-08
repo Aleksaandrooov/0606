@@ -24,7 +24,7 @@ export default async function Orders() {
 
   return (
     <Container className={!orders.length ? 'flex flex-col grow' : ''}>
-      <ProfileHeaderNavigationBar id={2} />
+      <ProfileHeaderNavigationBar id={2} role={session?.role} />
       {orders.length ? (
         <div className="mt-5"></div>
       ) : (

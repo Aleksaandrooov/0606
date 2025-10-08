@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  deps:
+    image: node:20-alpine
+    working_dir: /app
+    volumes:
+      - ./package.json:/app/package.json
+      - ./package-lock.json:/app/package-lock.json
+      - ./prisma:/app/prisma
+    environment:
+      NODE_ENV: production
+    command: npm ci
+
+  builder:
+    image: node:20-alpine
+    working_dir: /app
+    depends_on:
+      - deps
+    volumes:
+      - .:/app
+    environment:
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
+    command: npm run build
+
+  runner:
+    image: node:20-alpine
+    working_dir: /app
+    depends_on:
+      - builder
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"
+    command: ["npm", "start"]
+
+  # Optional: You can add a volume for persistent data if necessary
+  volumes:
+    app-data:

@@ -1,17 +1,17 @@
-'use client';
+'use client'
 
-import { Button } from '@/components/ui/button';
-import { List } from 'lucide-react';
-import Link from 'next/link';
-import React from 'react';
-import { ModalCart } from '../Modal/modal-cart';
-import { ProfileLogin } from '../Modal/profile-login';
-import { useSession } from 'next-auth/react';
-import { ProfileHeader } from './profileHeader';
-import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button'
+import { List } from 'lucide-react'
+import Link from 'next/link'
+import React from 'react'
+import { ModalCart } from '../Modal/modal-cart'
+import { ProfileLogin } from '../Modal/profile-login'
+import { useSession } from 'next-auth/react'
+import { ProfileHeader } from './profileHeader'
+import { cn } from '@/lib/utils'
 
 export const HeaderButtons = ({ className }: { className?: string }) => {
-  const { data: session } = useSession();
+  const { data: session } = useSession()
 
   return (
     <div className={cn('flex gap-2', className)}>
@@ -21,7 +21,7 @@ export const HeaderButtons = ({ className }: { className?: string }) => {
         </Button>
       </Link>
       <ModalCart />
-      {!session ? <ProfileLogin /> : <ProfileHeader role={session.user.role} />}
+      {!session ? <ProfileLogin /> : <ProfileHeader />}
     </div>
-  );
-};
+  )
+}

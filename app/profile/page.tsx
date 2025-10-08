@@ -14,7 +14,7 @@ export default async function Page() {
 
   return (
     <Container>
-      <ProfileHeaderNavigationBar id={1} />
+      <ProfileHeaderNavigationBar id={1} role={session?.role} />
       <ProfileSetting user={session!} />
     </Container>
   )

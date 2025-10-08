@@ -57,7 +57,9 @@ export const createProduct = async (
       })
 
     if ('item' in data) {
-      const sizes = sizesArray.filter((obj) => obj.price && obj.techSize && obj.wbSize)
+      const sizes = sizesArray
+        .filter((obj) => obj.price && obj.techSize && obj.wbSize)
+        .map(({ price, ...obj }) => ({ price: Number(price), ...obj }))
       const { brand, description, length, width, height } = data
 
       const product: fetchCreateProductInter = {
@@ -71,6 +73,7 @@ export const createProduct = async (
             length: Number(length),
             width: Number(width),
             height: Number(height),
+            weightBrutto: Number(weight) / 1000,
           },
           sizes,
           characteristics,
@@ -85,7 +88,7 @@ export const createProduct = async (
           return NextResponse.error()
         })
     }
-    const sizes = sizesArray.filter((obj) => obj.techSize && obj.quntity) // получаем размеры
+    const sizes = sizesArray.filter((obj) => obj.techSize && obj.quntity)
     const savedFiles = []
 
     for (const item of images) {
@@ -113,17 +116,15 @@ export const createProduct = async (
       },
     })
 
-    await Promise.all(
-      sizes.map(async (obj) => {
-        await prisma.size.create({
-          data: {
-            title: obj.techSize,
-            quntity: obj.quntity!,
-            productId: productCreate.id,
-          },
-        })
-      }),
-    )
+    for (const size of sizes) {
+      await prisma.size.create({
+        data: {
+          title: size.techSize,
+          quntity: Number(size.quntity),
+          productId: productCreate.id,
+        },
+      })
+    }
 
     await Promise.all(
       charact
@@ -165,7 +166,7 @@ export const editProduct = async (
       return NextResponse.error()
     }
 
-    let savedFiles = []
+    const savedFiles = []
     for (const item of images) {
       if (item instanceof File) {
         const name = Date.now() + '-' + item.name
@@ -200,18 +201,15 @@ export const editProduct = async (
       },
     })
 
-    await Promise.all(
-      sizes.map(
-        async (obj) =>
-          await prisma.size.create({
-            data: {
-              title: obj.techSize,
-              quntity: obj.quntity!,
-              productId: product.id,
-            },
-          }),
-      ),
-    )
+    for (const size of sizes) {
+      await prisma.size.create({
+        data: {
+          title: size.techSize,
+          quntity: Number(size.quntity),
+          productId: product.id,
+        },
+      })
+    }
 
     await prisma.characteristics.deleteMany({
       where: {

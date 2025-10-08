@@ -40,7 +40,7 @@ export const PreLoader = () => {
         <Logo
           className={cn(
             'transition-all duration-500',
-            render ? 'h-[25px]' : 'h-[60px] max-md:h-[40px]',
+            render ? 'h-[28px]' : 'h-[60px] max-md:h-[40px]',
           )}
         />
       </div>
